@@ -326,7 +326,7 @@ public class RankedShows extends Fragment {
                     if (channel.has("Number")) {
                         String number = channel.getString("Number");
                         if ("".equals(number)) {
-                            callSign += " [" + i + "*]";
+                            callSign += " [" + i + ".]";
                         } else  {
                             callSign += " [" + channel.getString("Number") + "]";
                         }
