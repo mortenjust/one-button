@@ -209,7 +209,7 @@ public class RankedShows extends Fragment {
             // &formattype=json
             // &disableChannels=music%2Cppv%2C24hr
 
-            String timezone = "80004";
+            String timezone = "70178.16777216";
             String start = Long.toString(System.currentTimeMillis() / 1000);
             String duration = Integer.toString(120);
             String channelFields = "Name,FullName,Number,SourceId";
