@@ -323,6 +323,15 @@ public class RankedShows extends Fragment {
 
                 if (channel.has("Name")) {
                     callSign = channel.getString("Name");
+                    if (channel.has("Number")) {
+                        String number = channel.getString("Number");
+                        if ("".equals(number)) {
+                            callSign += " [" + i + "?]";
+                        } else  {
+                            callSign += " [" + channel.getString("Number") + "]";
+                        }
+                    }
+//                    callSign += " [" + channel.getString("Number") + "]";
                 }
                 if (currentShow.has("Title") && currentShow.has("CatId")) {
                     if (currentShow.getInt("CatId") == 1) {
