@@ -282,6 +282,41 @@ public class RankedShows extends Fragment {
                 }
             }
 
+//            tvshowsJsonStr = "[\n" +
+//                    "{\n" +
+//                    "Channel: {\n" +
+//                    "FullName: \"TV Guide Network (West)\",\n" +
+//                    "Name: \"TVGN\",\n" +
+//                    "Number: \"2\",\n" +
+//                    "SourceId: 12013\n" +
+//                    "},\n" +
+//                    "ProgramSchedules: [\n" +
+//                    "{\n" +
+//                    "AiringAttrib: 10,\n" +
+//                    "CatId: 5,\n" +
+//                    "EndTime: 1412704800,\n" +
+//                    "ProgramId: 20173498,\n" +
+//                    "StartTime: 1412701200,\n" +
+//                    "Title: \"The Love Boat\"\n" +
+//                    "},\n" +
+//                    "{\n" +
+//                    "AiringAttrib: 8,\n" +
+//                    "CatId: 5,\n" +
+//                    "EndTime: 1412706600,\n" +
+//                    "ProgramId: 21083142,\n" +
+//                    "StartTime: 1412704800,\n" +
+//                    "Title: \"Humana Medicare Advantage Plans\"\n" +
+//                    "},\n" +
+//                    "{\n" +
+//                    "AiringAttrib: 266,\n" +
+//                    "CatId: 5,\n" +
+//                    "EndTime: 1412708400,\n" +
+//                    "ProgramId: 112811,\n" +
+//                    "StartTime: 1412706600,\n" +
+//                    "Title: \"Family Ties\"\n" +
+//                    "}\n" +
+//                    "]\n" +
+//                    "}]";
             Log.v(TAG, tvshowsJsonStr);
             try {
                 getTvshowDataFromJson(tvshowsJsonStr);
@@ -324,12 +359,13 @@ public class RankedShows extends Fragment {
                 if (channel.has("Name")) {
                     callSign = channel.getString("Name");
                     if (channel.has("Number")) {
-                        String number = channel.getString("Number");
-                        if ("".equals(number)) {
-                            callSign += " [" + i + ".]";
-                        } else  {
-                            callSign += " [" + channel.getString("Number") + "]";
-                        }
+//                        String number = channel.getString("Number");
+                        callSign += " [" + channel.getString("Number") + "]";
+//                        if ("".equals(number)) {
+//                            callSign += " [" + i + "?]";
+//                        } else  {
+//                            callSign += " [" + channel.getString("Number") + "]";
+//                        }
                     }
 //                    callSign += " [" + channel.getString("Number") + "]";
                 }
