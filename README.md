@@ -1,7 +1,5 @@
 # Tv is stuck in the past
-The channel numbers on your remote is real estate. Tv networks pay big money to be close to channel 1. They know that the more people see their jewelry shop, the more people buy. They don't care if you feel entertained - even though you represent 99.9% of the viewers. This is classic spam, right in your living room. No wonder people are cutting their wires.  But the alternative - streaming - is not a lot better. You easily spend 30 minutes deciding on a movie or series to watch with the paradox of choice sitting next to you in the couch. And probably the business of suggesting movies that have the lowest screening fees. You also never _really_ know if your show is available on Hulu, Netflix, HBO Go or Amazon Prime. 
-
-It's a lot of hard work when you just want to relax.
+The channel numbers on your remote is real estate. The low channel slots are often auctioned away for big money. The buyers know that 0.1% of those who flip to the Jewelry Shopping Channel actually end up buying. They don't care if you - or the other 199,999 viewers are annoyed. This is classic spam, but in your living room instead of just your inbox. No wonder people are cutting their wires.  And the alternative - streaming - is not a lot better. You easily spend 30 minutes deciding on a movie or series to watch with the paradox of choice sitting next to you in the couch. And probably also the business of suggesting movies that have the lowest screening fees. You also never really know if your show is available on Hulu, Netflix, HBO Go or Amazon Prime. TV should not be hard work when you're trying to relax.
 
 The one button remote is 
 * A Google Now approach to tv shows
