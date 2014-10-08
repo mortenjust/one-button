@@ -172,9 +172,9 @@ public class RankedShows extends Fragment {
                 if (imdbJson.has("imdbRating")) {
                     String rating = imdbJson.getString("imdbRating");
                     if (!"N/A".equals(rating)) {
-                        concurrentMap.put(channel + " (" + title + ")", Float.parseFloat(rating));
+                        concurrentMap.put(channel + " " + title + " ", Float.parseFloat(rating));
                     } else {
-                        concurrentMap.put(channel + " (" + title + ")", 0.0f);
+                        concurrentMap.put(channel + "  " + title + " ", 0.0f);
                     }
                 }
 
@@ -347,9 +347,8 @@ public class RankedShows extends Fragment {
             JSONArray tvshowsJson = new JSONArray(tvshowsJsonStr);
 
             for (int i = 0; i < tvshowsJson.length(); i++) {
-
-
                 String callSign = "";
+                String channelNumber = "";
                 JSONObject currentObject = tvshowsJson.getJSONObject(i);
 
                 // Get the JSON object representing the channel
@@ -359,21 +358,14 @@ public class RankedShows extends Fragment {
                 if (channel.has("Name")) {
                     callSign = channel.getString("Name");
                     if (channel.has("Number")) {
-//                        String number = channel.getString("Number");
-                        callSign += " [" + channel.getString("Number") + "]";
-//                        if ("".equals(number)) {
-//                            callSign += " [" + i + "?]";
-//                        } else  {
-//                            callSign += " [" + channel.getString("Number") + "]";
-//                        }
+                        channelNumber = channel.getString("Number");
                     }
-//                    callSign += " [" + channel.getString("Number") + "]";
                 }
                 if (currentShow.has("Title") && currentShow.has("CatId")) {
                     if (currentShow.getInt("CatId") == 1) {
                         Log.v(TAG, "It is a movie!");
                         String title = currentShow.getString("Title");
-
+                        callSign = channelNumber + " "+callSign;
                         titleChannels.put(callSign, title);
                     }
                 }
