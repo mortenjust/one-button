@@ -1,9 +1,6 @@
 package com.onebutton.util;
 
 import android.net.Uri;
-import android.util.Log;
-
-import com.onebutton.RankedShows;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,7 +23,7 @@ public class Network {
      * @param uri the uri.
      * @return the returned json or null.
      */
-    String getHttpJson(Uri uri) {
+    public static String executeHttpGet(Uri uri) {
         String jsonReply;
 
         HttpURLConnection urlConnection = null;
@@ -79,6 +76,8 @@ public class Network {
                 }
             }
         }
+        Logger.v(TAG, "JsonReply:  " + jsonReply);
+        return  jsonReply;
     }
 
 
