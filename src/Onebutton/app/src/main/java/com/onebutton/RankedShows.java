@@ -166,7 +166,7 @@ public class RankedShows extends Fragment {
                 }
             }
 
-            Log.v(TAG, imdbScoreJsonStr);
+           // Log.v(TAG, imdbScoreJsonStr);
             try {
                 JSONObject imdbJson = new JSONObject(imdbScoreJsonStr);
                 if (imdbJson.has("imdbRating")) {
@@ -236,7 +236,7 @@ public class RankedShows extends Fragment {
                         .build();
 
                 URL url = new URL(builtUri.toString());
-                Log.v(TAG, "Url: " + url);
+              //  Log.v(TAG, "Url: " + url);
 
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
@@ -317,7 +317,7 @@ public class RankedShows extends Fragment {
 //                    "}\n" +
 //                    "]\n" +
 //                    "}]";
-            Log.v(TAG, tvshowsJsonStr);
+        //    Log.v(TAG, tvshowsJsonStr);
             try {
                 getTvshowDataFromJson(tvshowsJsonStr);
             } catch (JSONException e) {
@@ -332,7 +332,7 @@ public class RankedShows extends Fragment {
         @Override
         protected void onPostExecute(Void a) {
             for (Map.Entry<String, String> entry : titleChannels.entrySet()) {
-                Log.v(TAG, "Get score for: " + entry.getValue());
+               // Log.v(TAG, "Get score for: " + entry.getValue());
                 FetchScoresTask fetchScoresTask = new FetchScoresTask();
                 fetchScoresTask.execute(entry.getValue(), entry.getKey());
             }
@@ -362,11 +362,13 @@ public class RankedShows extends Fragment {
                     }
                 }
                 if (currentShow.has("Title") && currentShow.has("CatId")) {
-                    if (currentShow.getInt("CatId") == 1) {
-                        Log.v(TAG, "It is a movie!");
+                    if (Integer.parseInt(channelNumber) < 100) { // this is a hacky way of getting rid of HD, expensive package channels, and reduce load time
+                       // Log.v(TAG, "It is a movie!");
                         String title = currentShow.getString("Title");
                         callSign = channelNumber + " "+callSign;
+                        Log.v(TAG, callSign+" "+title); // doing this so I can copy paste the debug info into the pitch deck
                         titleChannels.put(callSign, title);
+
                     }
                 }
             }
