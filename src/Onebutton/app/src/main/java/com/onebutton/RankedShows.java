@@ -5,6 +5,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -62,6 +65,35 @@ public class RankedShows extends Fragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.rankedshows, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_refresh) {
+            arrayAdapter.clear();
+            concurrentMap.clear();
+            Logger.v(TAG, "Refresh.");
+            arrayAdapter.notifyDataSetChanged();
+            rankShows();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Add this line in order for this fragment to handle menu events.
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the fragment.
@@ -93,7 +125,7 @@ public class RankedShows extends Fragment {
                 Channel channel = (Channel) iter.next();
                 Show show = sortedData.get(channel);
                 Logger.v(TAG, "Value/key:" + sortedData.get(channel) + "/" + channel);
-                al.add(channel.getNumber() + " " + channel.getName() + " " + show.getTitle() + "(" + show.getRating() +")");
+                al.add(channel.getNumber() + " " + channel.getName() + " " + show.getTitle() + "(" + show.getRating() + ")");
             }
             Logger.v(TAG, "----");
             arrayAdapter.addAll(al);
@@ -264,7 +296,7 @@ public class RankedShows extends Fragment {
 
 
                             // this is a hacky way of getting rid of HD, expensive package channels, and reduce load time
-                            if (channel.getNumber() != "" && Integer.parseInt(channel.getNumber()) < 100) {
+                            if (channel.getNumber() != null && !"".equals(channel.getNumber()) && Integer.parseInt(channel.getNumber()) < 100) {
                                 channelShows.put(channel, show);
                             }
                         }

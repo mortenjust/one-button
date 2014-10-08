@@ -14,9 +14,9 @@ public class Logger {
      * @param msg the message.
      */
     public static void v(String tag, String msg) {
-        if (Log.isLoggable(tag, Log.VERBOSE)) {
+       // if (Log.isLoggable(tag, Log.VERBOSE)) {
             Log.v(tag, msg);
-        }
+        //}
     }
 
     /**
