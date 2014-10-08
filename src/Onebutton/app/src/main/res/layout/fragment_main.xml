@@ -11,6 +11,8 @@
     <ListView
         android:id="@+id/listview_tvshows"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent"
+        android:choiceMode="none"
+        tools:listitem="@android:layout/simple_list_item_2"></ListView>
 
 </RelativeLayout>

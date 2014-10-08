@@ -378,7 +378,7 @@ public class RankedShows extends Fragment {
     }
 
     /**
-     * inner class to do soring of the map *
+     * inner class to do sorting of the map *
      */
     private static class ValueComparer implements Comparator {
         private Map _data = null;
