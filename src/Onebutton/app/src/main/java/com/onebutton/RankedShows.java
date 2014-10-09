@@ -10,11 +10,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.onebutton.domain.Channel;
 import com.onebutton.domain.Show;
+import com.onebutton.listview.ItemAdapter;
 import com.onebutton.util.Logger;
 import com.onebutton.util.Network;
 
@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -42,7 +41,7 @@ public class RankedShows extends Fragment {
     public static final String TAG = RankedShows.class.getSimpleName();
 
     // Array adapter that holds the list items to display.
-    private ArrayAdapter<String> arrayAdapter;
+    private ItemAdapter arrayAdapter;
     // Concurrent map that holds all the information to display.
     private ConcurrentMap<Channel, Show> concurrentMap = new ConcurrentHashMap<Channel, Show>();
 
@@ -99,9 +98,9 @@ public class RankedShows extends Fragment {
         // Inflate the fragment.
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        List<String> runningShows = new ArrayList<String>();
-        arrayAdapter = new ArrayAdapter<String>(getActivity(),
-                R.layout.list_item_tvshows, R.id.list_item_tvshows_textview, runningShows);
+        ArrayList<String> runningShows = new ArrayList<String>();
+        arrayAdapter = new ItemAdapter(getActivity(),
+                R.layout.list_item_tvshows, runningShows);
 
         ListView listView = (ListView) rootView.findViewById(R.id.listview_tvshows);
         listView.setAdapter(arrayAdapter);
@@ -125,7 +124,12 @@ public class RankedShows extends Fragment {
                 Channel channel = (Channel) iter.next();
                 Show show = sortedData.get(channel);
                 Logger.v(TAG, "Value/key:" + sortedData.get(channel) + "/" + channel);
-                al.add(channel.getNumber() + " " + channel.getName() + " " + show.getTitle() + "(" + show.getRating() + ")");
+
+                long currentTime = (System.currentTimeMillis()/1000);
+                long all = show.getEndtime() - show.getStarttime();
+                long progress = ((currentTime - show.getStarttime()) * 100)/all;
+
+                al.add(channel.getNumber() + " " + channel.getName() + " " + show.getTitle() + "(" + show.getRating() + ")  " + progress);
             }
             Logger.v(TAG, "----");
             arrayAdapter.addAll(al);
@@ -288,6 +292,14 @@ public class RankedShows extends Fragment {
 
                                 if (currentShow.has("CatId")) {
                                     show.setCategory(currentShow.getInt("CatId"));
+                                }
+
+                                if (currentShow.has("StartTime")) {
+                                    show.setStarttime(currentShow.getLong("StartTime"));
+                                }
+
+                                if (currentShow.has("EndTime")) {
+                                    show.setEndtime(currentShow.getLong("EndTime"));
                                 }
                             }
 
