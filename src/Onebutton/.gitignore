@@ -4,7 +4,6 @@ local.properties
 .idea/
 *.iml
 .DS_Store
-.gitignore
 
 # OS-specific files
 .DS_Store
