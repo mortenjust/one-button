@@ -43,8 +43,9 @@ public class RankedShows extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
-        fetchChannels();
+        if (arrayAdapter == null || arrayAdapter.getCount() == 0) {
+            fetchChannels();
+        }
     }
 
     private void fetchChannels() {
@@ -97,6 +98,7 @@ public class RankedShows extends Fragment {
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
             Log.v(TAG, "Refresh.");
+            arrayAdapter.clear();
             fetchChannels();
             return true;
         }
