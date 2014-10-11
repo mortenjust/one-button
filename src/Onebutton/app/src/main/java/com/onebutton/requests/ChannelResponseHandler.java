@@ -91,7 +91,9 @@ public class ChannelResponseHandler implements Response.Listener<String> {
                         channel.setCurrentShow(show);
 
                         // this is a hacky way of getting rid of HD, expensive package channels, and reduce load time
-                        if (channel.getNumber() != null && !"".equals(channel.getNumber()) && Integer.parseInt(channel.getNumber()) < 100) {
+                        if (channel.getNumber() != null && !"".equals(channel.getNumber()) && Integer.parseInt(channel.getNumber()) < 100
+                                && !show.getTitle().equals("Paid Programming") && !show.getTitle().equals("SportsCenter")) {
+                            // don't show paid programming or sport channels
 
                             mRunningChannels.add(channel);
 

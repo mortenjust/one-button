@@ -34,6 +34,8 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        // TODO: convertview
+
         if (inflater == null)
             inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
