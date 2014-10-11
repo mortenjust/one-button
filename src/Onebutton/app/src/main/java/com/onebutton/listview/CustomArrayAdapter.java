@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -56,6 +57,12 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         //Movie m = movieItems.get(position);
 
         Channel channel = getItem(position);
+        Log.v("Adapter", "" + position);
+
+        if (position == 0) {
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(700, 700);
+            thumbNail.setLayoutParams(layoutParams);
+        }
 
         thumbNail.setImageUrl("http://www.classicposters.com/images/nopicture.gif", imageLoader);
         // thumbnail image
@@ -63,12 +70,9 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         if (null != posterUrl && !"N/A".equals(posterUrl)) {
             Log.v("Adapter" , channel.getCurrentShow().getTitle() + " - Setting image to " + channel.getCurrentShow().getPosterUrl());
             thumbNail.setImageUrl(channel.getCurrentShow().getPosterUrl(), imageLoader);
-        } else {
-
         }
-
         // title
-        title.setText(channel.getName() + ": " + channel.getCurrentShow().getTitle());
+        title.setText(channel.getCurrentShow().getTitle());
 
         // rating
         rating.setText("Rating: " + String.valueOf(channel.getCurrentShow().getRating()));
