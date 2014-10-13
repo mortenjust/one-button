@@ -12,4 +12,15 @@
         <item name="android:maxHeight">20dip</item>
     </style>
 
+    <style name="CustomActionBarTheme"
+        parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/TranspActionBar</item>
+    </style>
+
+    <style name="TranspActionBar"
+        parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">#50505050</item>
+    </style>
+
+
 </resources>

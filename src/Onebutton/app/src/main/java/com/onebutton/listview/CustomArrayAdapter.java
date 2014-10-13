@@ -64,7 +64,8 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
             thumbNail.setLayoutParams(layoutParams);
         }
 
-        thumbNail.setImageUrl("http://www.classicposters.com/images/nopicture.gif", imageLoader);
+        // removing the nopicture image for now. TODO: How do you use a local image here? @drawable somethingsomethign?
+        // thumbNail.setImageUrl("http://www.classicposters.com/images/nopicture.gif", imageLoader);
         // thumbnail image
         String posterUrl = channel.getCurrentShow().getPosterUrl();
         if (null != posterUrl && !"N/A".equals(posterUrl)) {
