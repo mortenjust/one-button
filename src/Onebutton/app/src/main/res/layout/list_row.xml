@@ -33,7 +33,7 @@
             android:layout_toRightOf="@+id/thumbnail"
             android:textSize="@dimen/title"
             android:textStyle="bold"
-            android:gravity="right" />
+            android:gravity="left" />
 
         <!-- Rating -->
         <TextView
