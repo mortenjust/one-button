@@ -59,8 +59,8 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         Channel channel = getItem(position);
         Log.v("Adapter", "" + position);
 
-        if (position == 0) {
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(700, 700);
+        if (position == 0) { // TODO: would be cool with a layout xml file for this (http://android.amberfog.com/?p=296)
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(700,700);
             thumbNail.setLayoutParams(layoutParams);
         }
 
@@ -73,16 +73,16 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
             thumbNail.setImageUrl(channel.getCurrentShow().getPosterUrl(), imageLoader);
         }
         // title
-        title.setText(channel.getCurrentShow().getTitle());
-
-        // rating
-        rating.setText("Rating: " + String.valueOf(channel.getCurrentShow().getRating()));
+        title.setText(channel.getCurrentShow().getTitle()+" on "+channel.getNumber());
 
         // genre
-        genre.setText(channel.getCurrentShow().getGenre());
+        rating.setText(channel.getCurrentShow().getGenre()+", "+String.valueOf(channel.getCurrentShow().getRating()));
 
-        // release year
-        year.setText(String.valueOf(channel.getCurrentShow().getYear()));
+        // genre
+        // genre.setText();
+
+        // release year -- keeping it clean for now, not sure if Year provides enough context to make me change my mind about a show. I could be wrong.
+       // year.setText(String.valueOf(channel.getCurrentShow().getYear()));
 
         return convertView;
 
