@@ -65,6 +65,13 @@
             android:layout_alignParentRight="true"
             android:textColor="@color/year"
             android:textSize="@dimen/year" />
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_below="@id/rating"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            style="?android:attr/progressBarStyleHorizontal"/>
 
     </RelativeLayout>
+
 </RelativeLayout>

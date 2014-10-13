@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -13,6 +14,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.onebutton.R;
 import com.onebutton.RequestQueueSingleton;
 import com.onebutton.domain.Channel;
+import com.onebutton.domain.Show;
 
 import java.util.List;
 
@@ -57,11 +59,21 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         TextView genre = (TextView) convertView.findViewById(R.id.genre);
         TextView year = (TextView) convertView.findViewById(R.id.releaseYear);
 
+        ProgressBar progressBar = (ProgressBar) convertView.findViewById(R.id.progress_bar);
+
+
+
+
         // getting movie data for the row
         //Movie m = movieItems.get(position);
 
         Channel channel = getItem(position);
         Log.v("Adapter", "" + position);
+
+        Show currentShow = channel.getCurrentShow();
+        long now = System.currentTimeMillis()/1000;
+        long fullTime = currentShow.getEndtime() - currentShow.getStarttime();
+        progressBar.setProgress((int)(((now - currentShow.getStarttime()) * 100)/fullTime));
 
         // removing the nopicture image for now. TODO: thumbNail.setImageResource(resource_id);
         // thumbNail.setImageUrl("http://www.classicposters.com/images/nopicture.gif", imageLoader);
