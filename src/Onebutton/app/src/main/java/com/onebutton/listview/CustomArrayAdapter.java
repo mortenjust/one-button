@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -20,7 +19,6 @@ import java.util.List;
 
 public class CustomArrayAdapter extends ArrayAdapter<Channel> {
     private final Context context;
-    private final List<Channel> values;
     private LayoutInflater inflater;
     private ImageLoader imageLoader;
 
@@ -29,22 +27,28 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
     public CustomArrayAdapter(Context context, List<Channel> values) {
         super(context, R.layout.list_row, values);
         this.context = context;
-        this.values = values;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        // TODO: convertview
+        // TODO: Recycle convertview
 
-        if (inflater == null)
+        if (inflater == null) {
             inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //if (convertView == null)
-        convertView = inflater.inflate(R.layout.list_row, null);
+        }
 
-        if (imageLoader == null)
-            imageLoader =  RequestQueueSingleton.getInstance(context).getImageLoader();
+        if (position == 0) {
+            convertView = inflater.inflate(R.layout.list_first_row, null);
+        } else {
+            convertView = inflater.inflate(R.layout.list_row, null);
+        }
+
+
+        if (imageLoader == null) {
+            imageLoader = RequestQueueSingleton.getInstance(context).getImageLoader();
+        }
 
         NetworkImageView thumbNail = (NetworkImageView) convertView
                 .findViewById(R.id.thumbnail);
@@ -59,12 +63,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         Channel channel = getItem(position);
         Log.v("Adapter", "" + position);
 
-        if (position == 0) { // TODO: would be cool with a layout xml file for this (http://android.amberfog.com/?p=296)
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(700,700);
-            thumbNail.setLayoutParams(layoutParams);
-        }
-
-        // removing the nopicture image for now. TODO: How do you use a local image here? @drawable somethingsomethign?
+        // removing the nopicture image for now. TODO: thumbNail.setImageResource(resource_id);
         // thumbNail.setImageUrl("http://www.classicposters.com/images/nopicture.gif", imageLoader);
         // thumbnail image
         String posterUrl = channel.getCurrentShow().getPosterUrl();
