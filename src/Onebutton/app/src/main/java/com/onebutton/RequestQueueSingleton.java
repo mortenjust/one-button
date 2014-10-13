@@ -22,7 +22,7 @@ public class RequestQueueSingleton {
         mImageLoader = new ImageLoader(mRequestQueue,
                 new ImageLoader.ImageCache() {
                     private final LruCache<String, Bitmap>
-                            cache = new LruCache<String, Bitmap>(20);
+                            cache = new LruCache<String, Bitmap>(200);
 
                     @Override
                     public Bitmap getBitmap(String url) {
