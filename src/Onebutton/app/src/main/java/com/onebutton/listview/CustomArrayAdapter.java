@@ -23,6 +23,9 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
     private final Context context;
     private LayoutInflater inflater;
     private ImageLoader imageLoader;
+    private static final int VIEW_TYPE_COUNT = 2;
+    private static final int VIEW_TYPE_POSTER = 0;
+    private static final int VIEW_TYPE_ROW = 1;
 
 
 
@@ -97,5 +100,14 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
 
         return convertView;
 
+    }
+    @Override
+    public int getItemViewType(int position) {
+        return position == 0 ? VIEW_TYPE_POSTER : VIEW_TYPE_ROW;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return VIEW_TYPE_COUNT;
     }
 }
