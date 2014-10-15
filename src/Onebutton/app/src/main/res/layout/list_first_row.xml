@@ -14,7 +14,7 @@
         android:id="@+id/thumbnail"
         android:layout_width="fill_parent"
         android:layout_height="500dp"
-        android:background="#cccccc"
+        android:background="#212121"
         android:scaleType="centerCrop" android:padding="0dip"
        />
 
@@ -26,11 +26,11 @@
         android:paddingTop="8dp"
         android:paddingRight="8dp"
         android:paddingBottom="8dp"
-        android:background="#fff"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_gravity="top">
+        android:layout_gravity="top"
+        android:background="@drawable/big_title_protection">
 
 
         <!-- Movie Title -->
@@ -39,8 +39,13 @@
             android:layout_width="wrap_content"
             tools:text="Supernatural on 32"
             android:layout_height="wrap_content"
-            android:textSize="28sp"
-            android:textStyle="bold"
+            android:textSize="36sp"
+            android:textColor="@color/big_title"
+            android:shadowColor="@color/big_title_shadow"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:fontFamily="sans-serif-thin"
             android:gravity="left" />
 
         <!-- Rating -->
@@ -49,8 +54,13 @@
             android:layout_width="fill_parent"
             tools:text="Crime thriller, 8.0"
             android:layout_height="wrap_content"
+            android:textColor="@color/big_title"
             android:layout_below="@id/title"
             android:layout_marginTop="1dip"
+            android:shadowColor="@color/big_title_shadow"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
             android:textSize="@dimen/rating" />
 
         <!-- Genre -->

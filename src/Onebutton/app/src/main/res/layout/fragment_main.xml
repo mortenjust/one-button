@@ -9,6 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:choiceMode="none"
+        android:divider="@color/list_divider"
         tools:listitem="@android:layout/simple_list_item_2"></ListView>
 
 </RelativeLayout>

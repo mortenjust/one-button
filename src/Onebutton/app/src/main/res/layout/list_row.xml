@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/row_container"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/list_row_selector"
     android:paddingLeft="0dp">
 
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_below="@id/rating"
+        android:layout_width="match_parent"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_height="80dp"
+        android:progress="50"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progressDrawable="@drawable/greenprogress"/>
+
     <!-- Thumbnail Image to not have any top bottom left margins -->
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/thumbnail"
         android:layout_width="80dp"
+        android:background = "#212121"
         android:layout_height="80dp"
         android:layout_alignParentLeft="true"
         android:scaleType="centerCrop" android:padding="0dip"
@@ -32,45 +46,24 @@
             android:layout_alignTop="@+id/thumbnail"
             android:layout_toRightOf="@+id/thumbnail"
             android:textSize="@dimen/title"
-            android:textStyle="bold"
+            android:textColor="@color/text"
+            android:textStyle=""
+            android:fontFamily="Roboto Thin"
+            tools:text = "Titanic on 63"
             android:gravity="left" />
 
         <!-- Rating -->
         <TextView
             android:id="@+id/rating"
+            tools:text = "Drama, 7.6"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/title"
+            android:textColor="@color/secondaryText"
             android:layout_marginTop="1dip"
             android:layout_toRightOf="@+id/thumbnail"
             android:textSize="@dimen/rating" />
 
-        <!-- Genre -->
-        <TextView
-            android:id="@+id/genre"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rating"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@+id/thumbnail"
-            android:textColor="@color/genre"
-            android:textSize="@dimen/genre" />
-
-        <!-- Release Year -->
-        <TextView
-            android:id="@+id/releaseYear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/year"
-            android:textSize="@dimen/year" />
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_below="@id/rating"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            style="?android:attr/progressBarStyleHorizontal"/>
 
     </RelativeLayout>
 
