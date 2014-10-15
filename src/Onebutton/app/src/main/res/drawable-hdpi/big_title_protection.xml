@@ -4,6 +4,7 @@
     android:id="@+id/big_title_protection">
     <gradient
         android:type="linear"
+        android:centerColor="#000"
         android:angle="-90"
         android:endColor="#000" />
 </shape>

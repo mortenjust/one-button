@@ -87,7 +87,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
             thumbNail.setImageUrl(channel.getCurrentShow().getPosterUrl(), imageLoader);
         }
         // title
-        title.setText(channel.getCurrentShow().getTitle()+" on "+channel.getNumber());
+        title.setText("You probably want to watch "+channel.getCurrentShow().getTitle()+" on channel "+channel.getNumber());
 
         // genre
         rating.setText(channel.getCurrentShow().getGenre()+", "+String.valueOf(channel.getCurrentShow().getRating()));
