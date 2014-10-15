@@ -48,7 +48,7 @@
             android:textSize="@dimen/title"
             android:textColor="@color/text"
             android:textStyle=""
-            android:fontFamily="Roboto Thin"
+            android:fontFamily="sans-serif-thin"
             tools:text = "Titanic on 63"
             android:gravity="left" />
 

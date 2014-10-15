@@ -21,7 +21,7 @@
     <!-- Container for data about the show -->
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="100dp"
+        android:layout_height="fill_parent"
         android:paddingLeft="8dp"
         android:paddingTop="8dp"
         android:paddingRight="8dp"
@@ -37,8 +37,8 @@
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
-            tools:text="Supernatural on 32"
-            android:layout_height="wrap_content"
+            tools:text="Really long show title here on 32"
+            android:layout_height="fill_parent"
             android:textSize="36sp"
             android:textColor="@color/big_title"
             android:shadowColor="@color/big_title_shadow"
@@ -46,7 +46,7 @@
             android:shadowDy="1"
             android:shadowRadius="1"
             android:fontFamily="sans-serif-thin"
-            android:gravity="left" />
+            android:gravity="bottom" />
 
         <!-- Rating -->
         <TextView
