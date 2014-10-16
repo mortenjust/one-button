@@ -62,6 +62,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         TextView genre = (TextView) convertView.findViewById(R.id.genre);
         TextView year = (TextView) convertView.findViewById(R.id.releaseYear);
 
+
         ProgressBar progressBar = (ProgressBar) convertView.findViewById(R.id.progress_bar);
 
 
@@ -78,8 +79,6 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         long fullTime = currentShow.getEndtime() - currentShow.getStarttime();
         progressBar.setProgress((int)(((now - currentShow.getStarttime()) * 100)/fullTime));
 
-        // removing the nopicture image for now. TODO: thumbNail.setImageResource(resource_id);
-        // thumbNail.setImageUrl("http://www.classicposters.com/images/nopicture.gif", imageLoader);
         // thumbnail image
         String posterUrl = channel.getCurrentShow().getPosterUrl();
         if (null != posterUrl && !"N/A".equals(posterUrl)) {
@@ -87,10 +86,20 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
             thumbNail.setImageUrl(channel.getCurrentShow().getPosterUrl(), imageLoader);
         }
         // title
-        title.setText("You probably want to watch "+channel.getCurrentShow().getTitle()+" on channel "+channel.getNumber());
+        if(position==0) {
+            title.setText("You want to watch fucking " + channel.getCurrentShow().getTitle() + " on channel " + channel.getNumber());
+            rating.setText(channel.getName()+", "+String.valueOf(channel.getCurrentShow().getRating())+" "+channel.getCurrentShow().getPlot());
+        } else {
+            title.setText(channel.getCurrentShow().getTitle() + " on " + channel.getNumber());
+            rating.setText(channel.getName()+", "+String.valueOf(channel.getCurrentShow().getRating()));
 
-        // genre
-        rating.setText(channel.getCurrentShow().getGenre()+", "+String.valueOf(channel.getCurrentShow().getRating()));
+        }
+        // secondary text
+        //rating.setText(channel.getCurrentShow().getGenre()+", "+String.valueOf(channel.getCurrentShow().getRating()));
+
+
+
+
 
         // genre
         // genre.setText();

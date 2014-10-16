@@ -46,8 +46,13 @@ public class ShowResponseHandler implements Response.Listener<String> {
                 mChannel.getCurrentShow().setYear(imdbJson.getString("Year"));
             }
 
+            if (imdbJson.has("Plot")) {
+                mChannel.getCurrentShow().setPlot(imdbJson.getString("Plot"));
+            }
+
+
             if (imdbJson.has("Poster")) {
-                mChannel.getCurrentShow().setPosterUrl(imdbJson.getString("Poster"));
+                mChannel.getCurrentShow().setPosterUrl(imdbJson.getString("Poster")+"@@._V4_SX2000.jpg"); //morten added this stuff to the end because he thinks we can get higher resolution posters that way. Call him crazy. Call him an optimist. Call him on Skype.
             }
 
 

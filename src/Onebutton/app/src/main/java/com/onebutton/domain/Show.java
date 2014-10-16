@@ -10,6 +10,8 @@ public class Show {
     // The category of a show.
     private int category;
 
+    private String plot;
+
     // The rating of a show.
     private float rating;
 
@@ -33,6 +35,7 @@ public class Show {
                 "title='" + title + '\'' +
                 ", category=" + category +
                 ", rating=" + rating +
+                ", plot=" + plot+
                 ", starttime=" + starttime +
                 ", endtime=" + endtime +
                 ", year='" + year + '\'' +
@@ -47,6 +50,7 @@ public class Show {
         if (o == null || getClass() != o.getClass()) return false;
 
         Show show = (Show) o;
+
 
         if (category != show.category) return false;
         if (endtime != show.endtime) return false;
@@ -78,6 +82,11 @@ public class Show {
 
         return posterUrl;
     }
+
+    public String getPlot() {
+        return plot;
+    }
+    public void setPlot(String plot) { this.plot = plot; }
 
     public void setPosterUrl(String posterUrl) {
         this.posterUrl = posterUrl;
