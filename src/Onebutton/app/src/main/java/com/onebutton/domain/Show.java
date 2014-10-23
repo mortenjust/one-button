@@ -11,6 +11,8 @@ public class Show {
     private int category;
 
     private String plot;
+    private String imdbId;
+    private String backdropUrl;
 
     // The rating of a show.
     private float rating;
@@ -36,6 +38,7 @@ public class Show {
                 ", category=" + category +
                 ", rating=" + rating +
                 ", plot=" + plot+
+                ", imdbid=" + imdbId+
                 ", starttime=" + starttime +
                 ", endtime=" + endtime +
                 ", year='" + year + '\'' +
@@ -83,10 +86,22 @@ public class Show {
         return posterUrl;
     }
 
+    public String getImdbId() {
+        return imdbId;
+    }
+    public void setImdbId(String imdbId) { this.imdbId= imdbId; }
+
     public String getPlot() {
         return plot;
     }
     public void setPlot(String plot) { this.plot = plot; }
+
+
+    public String getBackdropUrl() {
+        return backdropUrl;
+    }
+    public void setBackdropUrl(String backdropUrl) { this.backdropUrl= backdropUrl; }
+
 
     public void setPosterUrl(String posterUrl) {
         this.posterUrl = posterUrl;

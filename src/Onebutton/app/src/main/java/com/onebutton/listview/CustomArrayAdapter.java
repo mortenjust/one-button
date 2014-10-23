@@ -61,6 +61,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         TextView rating = (TextView) convertView.findViewById(R.id.rating);
         TextView genre = (TextView) convertView.findViewById(R.id.genre);
         TextView year = (TextView) convertView.findViewById(R.id.releaseYear);
+        TextView channelName = (TextView) convertView.findViewById(R.id.channelName);
 
 
         ProgressBar progressBar = (ProgressBar) convertView.findViewById(R.id.progress_bar);
@@ -80,26 +81,33 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         progressBar.setProgress((int)(((now - currentShow.getStarttime()) * 100)/fullTime));
 
         // thumbnail image
-        String posterUrl = channel.getCurrentShow().getPosterUrl();
-        if (null != posterUrl && !"N/A".equals(posterUrl)) {
-            Log.v("Adapter" , channel.getCurrentShow().getTitle() + " - Setting image to " + channel.getCurrentShow().getPosterUrl());
-            thumbNail.setImageUrl(channel.getCurrentShow().getPosterUrl(), imageLoader);
-        }
-        // title
+        // title and thumbnail
         if(position==0) {
-            title.setText("You want to watch fucking " + channel.getCurrentShow().getTitle() + " on channel " + channel.getNumber());
-            rating.setText(channel.getName()+", "+String.valueOf(channel.getCurrentShow().getRating())+" "+channel.getCurrentShow().getPlot());
-        } else {
+
+            // big show at the top
+            String posterUrl = channel.getCurrentShow().getPosterUrl();
+            if (null != posterUrl && !"N/A".equals(posterUrl)) {
+                Log.v("Adapter" , channel.getCurrentShow().getTitle() + " - Setting backdrop to " + channel.getCurrentShow().getBackdropUrl());
+                thumbNail.setImageUrl(channel.getCurrentShow().getBackdropUrl(), imageLoader);
+                // thumbNail.setImageUrl("http://mortenjust.com/one-button/image.php?id=tt0460681", imageLoader);
+            }
+
             title.setText(channel.getCurrentShow().getTitle() + " on " + channel.getNumber());
             rating.setText(channel.getName()+", "+String.valueOf(channel.getCurrentShow().getRating()));
 
+            // small shows in the list
+        } else {
+            String posterUrl = channel.getCurrentShow().getPosterUrl();
+            if (null != posterUrl && !"N/A".equals(posterUrl)) {
+                Log.v("Adapter" , channel.getCurrentShow().getTitle() + " - Setting thumbnail image to " + channel.getCurrentShow().getPosterUrl());
+                thumbNail.setImageUrl(channel.getCurrentShow().getPosterUrl(), imageLoader);
+            }
+            title.setText(channel.getCurrentShow().getTitle() + " on " + channel.getNumber());
+            rating.setText(String.valueOf(channel.getCurrentShow().getRating()));
+            channelName.setText(channel.getName());
         }
         // secondary text
         //rating.setText(channel.getCurrentShow().getGenre()+", "+String.valueOf(channel.getCurrentShow().getRating()));
-
-
-
-
 
         // genre
         // genre.setText();

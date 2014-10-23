@@ -18,15 +18,46 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:progressDrawable="@drawable/greenprogress"/>
 
-    <!-- Thumbnail Image to not have any top bottom left margins -->
-    <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/thumbnail"
-        android:layout_width="80dp"
-        android:background = "#212121"
-        android:layout_height="80dp"
-        android:layout_alignParentLeft="true"
-        android:scaleType="centerCrop" android:padding="0dip"
-       />
+<!-- Trying out a replacement for the noisy thumbnails, and
+ also trying to make it look more like a tv guide for
+ demo reasons -->
+
+<RelativeLayout
+    android:layout_width="80dp"
+    android:background = "#000000"
+    android:padding = "8dp"
+    android:layout_height="80dp"
+    android:layout_alignParentLeft="true">
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:id="@+id/channelName"
+        android:textColor="#616161"
+        tools:text = "NBC"
+        />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:id="@+id/channelName"
+        android:textColor="#616161"
+        tools:text = "555"
+        android:layout_alignTop="@+id/channelName"
+        />
+
+
+</RelativeLayout>
+
+
+ <!-- Thumbnail Image to not have any top bottom left margins -->
+ <com.android.volley.toolbox.NetworkImageView
+     android:id="@+id/thumbnail"
+     android:layout_width="0dp"
+     android:background = "#212121"
+     android:layout_height="0dp"
+     android:layout_alignParentLeft="true"
+     android:scaleType="centerCrop" android:padding="0dip"
+    />
+
 
     <!-- Container for data about the show -->
     <RelativeLayout

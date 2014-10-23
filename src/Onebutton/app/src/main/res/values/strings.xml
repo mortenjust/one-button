@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">ShowRanker</string>
+    <string name="app_name">ShowRank</string>
     <string name="action_settings">Settings</string>
     <string name="action_refresh">Refresh</string>
-
 </resources>
