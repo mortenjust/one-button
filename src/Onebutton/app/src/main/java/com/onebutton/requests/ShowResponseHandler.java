@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import java.util.Comparator;
 
 
+
 /**
  * Created by flow on 10/11/14.
  */
@@ -49,6 +50,16 @@ public class ShowResponseHandler implements Response.Listener<String> {
             if (imdbJson.has("Plot")) {
                 mChannel.getCurrentShow().setPlot(imdbJson.getString("Plot"));
             }
+
+
+
+            if (imdbJson.has("imdbID")) {
+                mChannel.getCurrentShow().setImdbId(imdbJson.getString("imdbID"));
+
+                // TODO: a real request to the tmdb api instead of this hack
+                mChannel.getCurrentShow().setBackdropUrl("http://mortenjust.com/one-button/image.php?id="+imdbJson.getString("imdbID"));
+            }
+
 
 
             if (imdbJson.has("Poster")) {

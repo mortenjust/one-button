@@ -12,6 +12,6 @@ public class ErrorResponseHandler implements Response.ErrorListener {
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.e("ABC", "Failed", error);
+        Log.e("Volley error (was ABC)", "Failed (dude, are you online?)", error);
     }
 }
