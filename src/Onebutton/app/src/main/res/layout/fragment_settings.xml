@@ -33,7 +33,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
+        android:id="@+id/service_provider_list_view"
         android:layout_gravity="center_horizontal" />
 
 </LinearLayout>
