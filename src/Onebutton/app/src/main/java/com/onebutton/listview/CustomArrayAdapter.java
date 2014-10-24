@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -33,6 +34,18 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         super(context, R.layout.list_row, values);
         this.context = context;
     }
+
+    private int getLogoResource(String channelName) {
+        String logoString = channelName.toLowerCase();
+        int resId = getContext().getResources().getIdentifier(logoString, "drawable", "com.onebutton");
+        if(resId != 0){
+            return resId;
+        }
+        // return R.drawable.flag_default;
+        // todo: need a default drawable for channels with no logo, using NBC for now:
+        return R.drawable.nbc;
+    }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -62,7 +75,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         TextView genre = (TextView) convertView.findViewById(R.id.genre);
         TextView year = (TextView) convertView.findViewById(R.id.releaseYear);
         TextView channelName = (TextView) convertView.findViewById(R.id.channelName);
-
+        ImageView channelLogo = (ImageView) convertView.findViewById(R.id.channelLogo);
 
         ProgressBar progressBar = (ProgressBar) convertView.findViewById(R.id.progress_bar);
 
@@ -105,6 +118,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
             title.setText(channel.getCurrentShow().getTitle() + " on " + channel.getNumber());
             rating.setText(String.valueOf(channel.getCurrentShow().getRating()));
             channelName.setText(channel.getName());
+            channelLogo.setImageResource(getLogoResource(channel.getName()));
         }
         // secondary text
         //rating.setText(channel.getCurrentShow().getGenre()+", "+String.valueOf(channel.getCurrentShow().getRating()));
