@@ -29,7 +29,6 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
     private static final int VIEW_TYPE_ROW = 1;
 
 
-
     public CustomArrayAdapter(Context context, List<Channel> values) {
         super(context, R.layout.list_row, values);
         this.context = context;
@@ -38,7 +37,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
     private int getLogoResource(String channelName) {
         String logoString = channelName.toLowerCase();
         int resId = getContext().getResources().getIdentifier(logoString, "drawable", "com.onebutton");
-        if(resId != 0){
+        if (resId != 0) {
             return resId;
         }
         // return R.drawable.flag_default;
@@ -80,8 +79,6 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         ProgressBar progressBar = (ProgressBar) convertView.findViewById(R.id.progress_bar);
 
 
-
-
         // getting movie data for the row
         //Movie m = movieItems.get(position);
 
@@ -89,30 +86,29 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         Log.v("Adapter", "" + position);
 
         Show currentShow = channel.getCurrentShow();
-        long now = System.currentTimeMillis()/1000;
+        long now = System.currentTimeMillis() / 1000;
         long fullTime = currentShow.getEndtime() - currentShow.getStarttime();
-        progressBar.setProgress((int)(((now - currentShow.getStarttime()) * 100)/fullTime));
+        progressBar.setProgress((int) (((now - currentShow.getStarttime()) * 100) / fullTime));
 
         // thumbnail image
         // title and thumbnail
-        if(position==0) {
+        if (position == 0) {
 
             // big show at the top
-            String posterUrl = channel.getCurrentShow().getPosterUrl();
-            if (null != posterUrl && !"N/A".equals(posterUrl)) {
-                Log.v("Adapter" , channel.getCurrentShow().getTitle() + " - Setting backdrop to " + channel.getCurrentShow().getBackdropUrl());
+            String backdropUrl = channel.getCurrentShow().getBackdropUrl();
+            if (null != backdropUrl && !"N/A".equals(backdropUrl)) {
+                Log.v("Adapter", channel.getCurrentShow().getTitle() + " - Setting backdrop to " + backdropUrl);
                 thumbNail.setImageUrl(channel.getCurrentShow().getBackdropUrl(), imageLoader);
-                // thumbNail.setImageUrl("http://mortenjust.com/one-button/image.php?id=tt0460681", imageLoader);
             }
 
             title.setText(channel.getCurrentShow().getTitle() + " on " + channel.getNumber());
-            rating.setText(channel.getName()+", "+String.valueOf(channel.getCurrentShow().getRating()));
+            rating.setText(channel.getName() + ", " + String.valueOf(channel.getCurrentShow().getRating()));
 
             // small shows in the list
         } else {
             String posterUrl = channel.getCurrentShow().getPosterUrl();
             if (null != posterUrl && !"N/A".equals(posterUrl)) {
-                Log.v("Adapter" , channel.getCurrentShow().getTitle() + " - Setting thumbnail image to " + channel.getCurrentShow().getPosterUrl());
+                Log.v("Adapter", channel.getCurrentShow().getTitle() + " - Setting thumbnail image to " + channel.getCurrentShow().getPosterUrl());
                 thumbNail.setImageUrl(channel.getCurrentShow().getPosterUrl(), imageLoader);
             }
             title.setText(channel.getCurrentShow().getTitle() + " on " + channel.getNumber());
@@ -127,11 +123,12 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         // genre.setText();
 
         // release year -- keeping it clean for now, not sure if Year provides enough context to make me change my mind about a show. I could be wrong.
-       // year.setText(String.valueOf(channel.getCurrentShow().getYear()));
+        // year.setText(String.valueOf(channel.getCurrentShow().getYear()));
 
         return convertView;
 
     }
+
     @Override
     public int getItemViewType(int position) {
         return position == 0 ? VIEW_TYPE_POSTER : VIEW_TYPE_ROW;
