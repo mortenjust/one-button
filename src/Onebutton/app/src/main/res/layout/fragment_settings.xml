@@ -19,7 +19,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText"
+            android:id="@+id/zip_code_text"
             android:layout_weight="1" />
 
     </LinearLayout>

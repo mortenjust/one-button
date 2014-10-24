@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -57,6 +58,10 @@ public class SettingsActivity extends Activity {
      */
     public static class PlaceholderFragment extends Fragment {
 
+
+        private Button mSearchButton;
+        private EditText mZipCodeButton;
+
         public PlaceholderFragment() {
         }
 
@@ -67,13 +72,19 @@ public class SettingsActivity extends Activity {
             View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 
 
-            Button searchButton = (Button) rootView.findViewById(R.id.search_button);
+            mSearchButton = (Button) rootView.findViewById(R.id.search_button);
+            mZipCodeButton = (EditText) rootView.findViewById(R.id.zip_code_text);
 
-            searchButton.setOnClickListener(new View.OnClickListener() {
+            mSearchButton.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-                    String url = "http://www.google.com";
+
+
+                    String zipCode  = mZipCodeButton.getText().toString();
+
+                    String url = "http://mobilelistings.tvguide.com/Listingsweb/ws/rest/serviceproviders/zipcode/" +
+                            zipCode + "?formattype=json";
 
                     // Request a string response from the provided URL.
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -92,8 +103,6 @@ public class SettingsActivity extends Activity {
                     RequestQueueSingleton.getInstance(getActivity()).addToRequestQueue(stringRequest);
                 }
             });
-
-
             return rootView;
         }
     }
