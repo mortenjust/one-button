@@ -73,11 +73,20 @@ public class ShowResponseHandler implements Response.Listener<String> {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
+                    String backdropUrl = "http://image.tmdb.org/t/p/w780";
 
                     try {
                         JSONObject responseJson = new JSONObject(response);
                         JSONArray tvshowsJson = responseJson.getJSONArray("tv_results");
-                        String backdropUrl = "http://image.tmdb.org/t/p/w780" + tvshowsJson.getJSONObject(0).getString("backdrop_path");
+
+                        if (tvshowsJson.length() != 0) {
+                            backdropUrl += tvshowsJson.getJSONObject(0).getString("backdrop_path");
+                        }
+
+                        JSONArray movie_results = responseJson.getJSONArray("movie_results");
+                        if (movie_results.length() != 0) {
+                            backdropUrl += movie_results.getJSONObject(0).getString("backdrop_path");
+                        }
                         currentShow.setBackdropUrl(backdropUrl);
 
                     } catch (JSONException e) {

@@ -40,6 +40,7 @@ public class RankedShows extends Fragment {
 
 
     private View rootView;
+    private boolean mUpdateInProgress;
 
     // Public constructor
     public RankedShows() {
@@ -56,10 +57,12 @@ public class RankedShows extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        fetchChannels();
+        //fetchChannels();
     }
 
     private void fetchChannels() {
+        mUpdateInProgress = true;
+
         // Example Uri:
         // http://mobilelistings.tvguide.com/Listingsweb/ws/rest/schedules/80004/start/1412681400/duration/120
         // ?ChannelFields=Name%2CFullName%2CNumber%2CSourceId
