@@ -67,7 +67,7 @@ public class ShowResponseHandler implements Response.Listener<String> {
 
             final String FORECAST_BASE_URL = "http://www.omdbapi.com/";
 
-
+// <<<<<<< HEAD
             mActivity.getArrayAdapter().sort(new Comparator<Channel>() {
                 @Override
                 public int compare(Channel lhs, Channel rhs) {
@@ -79,7 +79,7 @@ public class ShowResponseHandler implements Response.Listener<String> {
                     int compare = rating2.compareTo(rating1);
                     if (compare == 0) {
                         compare = lhs.getName().compareTo(rhs.getName());
-
+/// =======
 
             final String url = "http://api.themoviedb.org/3/find/" + currentShow.getImdbId() + "?api_key=bc14543062e3ef8391d32cb264987581&external_source=imdb_id";
 
@@ -105,6 +105,7 @@ public class ShowResponseHandler implements Response.Listener<String> {
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Log.v("TAG", "For: " + url);
+// >>>>>>> 0a7a9caa2a5b18774aece5dc56fadf0262c11112
                     }
 
 
