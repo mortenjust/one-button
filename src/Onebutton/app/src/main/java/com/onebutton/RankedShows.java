@@ -1,6 +1,8 @@
 package com.onebutton;
 
 import android.app.Fragment;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
+import com.melnykov.fab.FloatingActionButton;
 import com.onebutton.domain.Channel;
 import com.onebutton.listview.CustomArrayAdapter;
 import com.onebutton.requests.ChannelResponseHandler;
@@ -26,6 +29,8 @@ import java.util.List;
  * This Fragment shows the ranked shows.
  */
 public class RankedShows extends Fragment {
+
+    public static final String PREFS_NAME = "MyPrefsFile";
 
 
     private static final String TAG = RankedShows.class.getSimpleName();
@@ -48,6 +53,12 @@ public class RankedShows extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        fetchChannels();
+    }
+
     private void fetchChannels() {
         // Example Uri:
         // http://mobilelistings.tvguide.com/Listingsweb/ws/rest/schedules/80004/start/1412681400/duration/120
@@ -56,7 +67,9 @@ public class RankedShows extends Fragment {
         // &formattype=json
         // &disableChannels=music%2Cppv%2C24hr
 
-        String timezone = "70178.16777216"; // TODO minor detail, I think this is actually more like cable company and location
+        SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
+
+        String serviceProviderAndDevice = settings.getString("serviceProviderAndDevice", "");
         String start = Long.toString(System.currentTimeMillis() / 1000);
         String duration = Integer.toString(120);
         String channelFields = "Name,FullName,Number,SourceId";
@@ -67,7 +80,7 @@ public class RankedShows extends Fragment {
 
         final String FORECAST_BASE_URL =
                 "http://mobilelistings.tvguide.com/Listingsweb/ws/rest/schedules/" +
-                        timezone + "/start/" + start + "/duration/" + duration + "?";
+                        serviceProviderAndDevice + "/start/" + start + "/duration/" + duration + "?";
         final String CHANNELFIELDS_PARAM = "ChannelFields";
         final String SCHEDULEFIELDS_PARAM = "ScheduleFields";
         final String FORMATTYPE_PARAM = "formattype";
@@ -121,6 +134,17 @@ public class RankedShows extends Fragment {
         mListView = (ListView) rootView.findViewById(R.id.listview_tvshows);
         arrayAdapter = new CustomArrayAdapter(getActivity(), runningChannels);
         mListView.setAdapter(arrayAdapter);
+
+
+
+        FloatingActionButton floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.button_floating_action);
+        floatingActionButton.attachToListView(mListView);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
+            }
+        });
 
         return rootView;
     }
