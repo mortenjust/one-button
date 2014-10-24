@@ -70,8 +70,10 @@ public class ShowResponseHandler implements Response.Listener<String> {
             mActivity.getArrayAdapter().sort(new Comparator<Channel>() {
                 @Override
                 public int compare(Channel lhs, Channel rhs) {
+
                     Float rating1 = lhs.getCurrentShow().getRating();
                     Float rating2 = rhs.getCurrentShow().getRating();
+
 
                     int compare = rating2.compareTo(rating1);
                     if (compare == 0) {

@@ -89,9 +89,9 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         Log.v("Adapter", "" + position);
 
         Show currentShow = channel.getCurrentShow();
-        long now = System.currentTimeMillis()/1000;
-        long fullTime = currentShow.getEndtime() - currentShow.getStarttime();
-        progressBar.setProgress((int)(((now - currentShow.getStarttime()) * 100)/fullTime));
+        // long now = System.currentTimeMillis()/1000;
+        // long fullTime = currentShow.getEndtime() - currentShow.getStarttime();
+        progressBar.setProgress(currentShow.getProgress());
 
         // thumbnail image
         // title and thumbnail
