@@ -7,9 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -32,13 +29,10 @@ public class RankedShows extends Fragment {
 
     public static final String PREFS_NAME = "MyPrefsFile";
 
-
     private static final String TAG = RankedShows.class.getSimpleName();
     private ListView mListView;
     private CustomArrayAdapter arrayAdapter;
     private List<Channel> runningChannels = new ArrayList<Channel>();
-
-
     private View rootView;
 
     // Public constructor
@@ -99,33 +93,6 @@ public class RankedShows extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.rankedshows, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_refresh) {
-            Log.v(TAG, "Refresh.");
-            arrayAdapter.clear();
-            fetchChannels();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // Add this line in order for this fragment to handle menu events.
-        setHasOptionsMenu(true);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the fragment.
@@ -134,7 +101,6 @@ public class RankedShows extends Fragment {
         mListView = (ListView) rootView.findViewById(R.id.listview_tvshows);
         arrayAdapter = new CustomArrayAdapter(getActivity(), runningChannels);
         mListView.setAdapter(arrayAdapter);
-
 
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.button_floating_action);
