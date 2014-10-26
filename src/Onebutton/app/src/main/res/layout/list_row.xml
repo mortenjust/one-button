@@ -41,7 +41,6 @@
         android:id="@+id/channelLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/nbc"
         android:layout_marginLeft="3dip"
         android:scaleType="fitCenter"
         android:alpha=".5" />
