@@ -112,6 +112,12 @@ public class ShowResponseHandler implements Response.Listener<String> {
                             Float rating1 = lhs.getCurrentShow().getRating();
                             Float rating2 = rhs.getCurrentShow().getRating();
 
+                            rating1 = rating1 - (lhs.getCurrentShow().getProgress()/10);
+                            rating2= rating2 - (rhs.getCurrentShow().getProgress()/10);
+
+                            if(rating1<0){rating1=0f;}
+                            if(rating2<0){rating2=0f;}
+
                             int compare = rating2.compareTo(rating1);
                             if (compare == 0) {
                                 compare = lhs.getName().compareTo(rhs.getName());

@@ -21,7 +21,7 @@
         android:layout_gravity="bottom|right"
         fab:fab_colorNormal="#424242"
         android:layout_margin="16dp"
-        android:alpha="0.50"
+        android:alpha="0.25"
         android:src="@drawable/ic_settings_white"
         fab:fab_shadow="false"
         />
