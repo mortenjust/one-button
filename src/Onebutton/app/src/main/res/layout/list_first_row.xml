@@ -13,7 +13,7 @@
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/thumbnail"
         android:layout_width="fill_parent"
-        android:layout_height="500dp"
+        android:layout_height="300dp"
         android:background="#000000"
         android:alpha="0.8"
         android:scaleType="centerCrop" android:padding="0dip"
