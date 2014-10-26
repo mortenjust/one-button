@@ -86,6 +86,9 @@ public class ShowResponseHandler implements Response.Listener<String> {
                         if (movie_results.length() != 0) {
                             backdropUrl += movie_results.getJSONObject(0).getString("backdrop_path");
                         }
+
+
+
                         currentShow.setBackdropUrl(backdropUrl);
 
                     } catch (JSONException e) {
