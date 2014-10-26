@@ -35,14 +35,17 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
     }
 
     private int getLogoResource(String channelName) {
-        String logoString = channelName.toLowerCase();
+        String logoString = channelName.toLowerCase().replace("&", "_and_").replace("+", "plus");
+
         int resId = getContext().getResources().getIdentifier(logoString, "drawable", "com.onebutton");
         if (resId != 0) {
             return resId;
         }
         // return R.drawable.flag_default;
         // todo: need a default drawable for channels with no logo, using NBC for now:
-        return R.drawable.nbc;
+
+        Log.v("RES", "Can't find " + channelName);
+        return R.drawable.nologo;
     }
 
 
@@ -73,9 +76,9 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         TextView rating = (TextView) convertView.findViewById(R.id.rating);
         TextView genre = (TextView) convertView.findViewById(R.id.genre);
         TextView year = (TextView) convertView.findViewById(R.id.releaseYear);
-        TextView channelName = (TextView) convertView.findViewById(R.id.channelName);
+        //TextView channelName = (TextView) convertView.findViewById(R.id.channelName);
+        TextView channelNumber = (TextView) convertView.findViewById(R.id.channelNumber);
         ImageView channelLogo = (ImageView) convertView.findViewById(R.id.channelLogo);
-
         ProgressBar progressBar = (ProgressBar) convertView.findViewById(R.id.progress_bar);
 
 
@@ -94,36 +97,28 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         // title and thumbnail
         if (position == 0) {
 
-            // big show at the top
+            // big show at the top:
             String backdropUrl = channel.getCurrentShow().getBackdropUrl();
             if (null != backdropUrl && !"N/A".equals(backdropUrl)) {
                 Log.v("Adapter", channel.getCurrentShow().getTitle() + " - Setting backdrop to " + backdropUrl);
                 thumbNail.setImageUrl(channel.getCurrentShow().getBackdropUrl(), imageLoader);
             }
 
-            title.setText(channel.getCurrentShow().getTitle() + " on " + channel.getNumber());
-            rating.setText(channel.getName() + ", " + String.valueOf(channel.getCurrentShow().getRating()));
+            title.setText(channel.getCurrentShow().getTitle());
+            rating.setText(channel.getName() + ", " + channel.getNumber() +", " + String.valueOf(channel.getCurrentShow().getRating()));
 
-            // small shows in the list
+            // small shows in the list:
         } else {
             String posterUrl = channel.getCurrentShow().getPosterUrl();
             if (null != posterUrl && !"N/A".equals(posterUrl)) {
                 Log.v("Adapter", channel.getCurrentShow().getTitle() + " - Setting thumbnail image to " + channel.getCurrentShow().getPosterUrl());
                 thumbNail.setImageUrl(channel.getCurrentShow().getPosterUrl(), imageLoader);
             }
-            title.setText(channel.getCurrentShow().getTitle() + " on " + channel.getNumber());
+            title.setText(channel.getCurrentShow().getTitle());
             rating.setText(String.valueOf(channel.getCurrentShow().getRating()));
-            channelName.setText(channel.getName());
+            channelNumber.setText(channel.getNumber());
             channelLogo.setImageResource(getLogoResource(channel.getName()));
         }
-        // secondary text
-        //rating.setText(channel.getCurrentShow().getGenre()+", "+String.valueOf(channel.getCurrentShow().getRating()));
-
-        // genre
-        // genre.setText();
-
-        // release year -- keeping it clean for now, not sure if Year provides enough context to make me change my mind about a show. I could be wrong.
-        // year.setText(String.valueOf(channel.getCurrentShow().getYear()));
 
         return convertView;
 
