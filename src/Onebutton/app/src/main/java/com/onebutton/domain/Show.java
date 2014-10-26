@@ -165,7 +165,7 @@ public class Show {
         this.title = title;
     }
 
-    public int getProgress() {
+    public int getProgress() { // returns progress as 0 to 100
         long now = System.currentTimeMillis()/1000;
         long fullTime = this.getEndtime() - this.getStarttime();
         int progress = (int)(((now - this.getStarttime()) * 100)/fullTime);
