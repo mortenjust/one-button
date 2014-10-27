@@ -44,10 +44,6 @@
         android:layout_marginLeft="3dip"
         android:scaleType="fitCenter"
         android:alpha=".5" />
-
-
-
-
 </RelativeLayout>
 
 
@@ -81,7 +77,6 @@
             android:layout_toRightOf="@+id/thumbnail"
             android:textSize="@dimen/title"
             android:textColor="@color/text"
-            android:textStyle=""
             android:fontFamily="sans-serif-thin"
             tools:text = "Titanic on 63"
             android:gravity="left" />

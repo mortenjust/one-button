@@ -74,12 +74,8 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
                 .findViewById(R.id.thumbnail);
         TextView title = (TextView) convertView.findViewById(R.id.title);
         TextView rating = (TextView) convertView.findViewById(R.id.rating);
-        TextView genre = (TextView) convertView.findViewById(R.id.genre);
-        TextView year = (TextView) convertView.findViewById(R.id.releaseYear);
-        //TextView channelName = (TextView) convertView.findViewById(R.id.channelName);
         TextView channelNumber = (TextView) convertView.findViewById(R.id.channelNumber);
         ImageView channelLogo = (ImageView) convertView.findViewById(R.id.channelLogo);
-        ProgressBar progressBar = (ProgressBar) convertView.findViewById(R.id.progress_bar);
 
 
         // getting movie data for the row
@@ -91,7 +87,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         Show currentShow = channel.getCurrentShow();
         // long now = System.currentTimeMillis()/1000;
         // long fullTime = currentShow.getEndtime() - currentShow.getStarttime();
-        progressBar.setProgress(currentShow.getProgress());
+
 
         // thumbnail image
         // title and thumbnail
@@ -103,23 +99,16 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
                 Log.v("Adapter", channel.getCurrentShow().getTitle() + " - Setting backdrop to " + backdropUrl);
                 thumbNail.setImageUrl(channel.getCurrentShow().getBackdropUrl(), imageLoader);
             }
-
-            title.setText(channel.getCurrentShow().getTitle());
-            rating.setText(channel.getName() + ", " + channel.getNumber() +", " + String.valueOf(channel.getCurrentShow().getRating()));
-
             // small shows in the list:
         } else {
-            String posterUrl = channel.getCurrentShow().getPosterUrl();
-            if (null != posterUrl && !"N/A".equals(posterUrl)) {
-                Log.v("Adapter", channel.getCurrentShow().getTitle() + " - Setting thumbnail image to " + channel.getCurrentShow().getPosterUrl());
-                thumbNail.setImageUrl(channel.getCurrentShow().getPosterUrl(), imageLoader);
-            }
-            title.setText(channel.getCurrentShow().getTitle());
-            rating.setText(String.valueOf(channel.getCurrentShow().getRating()));
-            channelNumber.setText(channel.getNumber());
-            channelLogo.setImageResource(getLogoResource(channel.getName()));
+            ProgressBar progressBar = (ProgressBar) convertView.findViewById(R.id.progress_bar);
+            progressBar.setProgress(currentShow.getProgress());
         }
 
+        channelLogo.setImageResource(getLogoResource(channel.getName()));
+        channelNumber.setText(channel.getNumber());
+        rating.setText(String.valueOf(channel.getCurrentShow().getRating()));
+        title.setText(channel.getCurrentShow().getTitle());
         return convertView;
 
     }
