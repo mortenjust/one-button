@@ -14,83 +14,94 @@
         android:id="@+id/thumbnail"
         android:layout_width="fill_parent"
         android:layout_height="300dp"
-        android:background="#000000"
-        android:alpha="0.8"
         android:scaleType="centerCrop" android:padding="0dip"
-       />
+        />
 
 
 
     <!-- Container for data about the show -->
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:paddingLeft="8dp"
-        android:paddingTop="8dp"
-        android:paddingRight="8dp"
-        android:paddingBottom="8dp"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_gravity="top"
-       >
 
+        >
+
+
+        <RelativeLayout
+            android:id="@+id/channelMeta"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background = "#000000"
+            android:alpha = ".9"
+            android:padding = "8dp"
+            android:gravity="bottom"
+
+
+            >
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:id="@+id/channelNumber"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1"
+                android:textColor="#fff"
+                tools:text = "555"
+                />
+
+            <ImageView
+                android:id="@+id/channelLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dip"
+                android:scaleType="fitCenter"
+                android:layout_below="@id/channelNumber"
+
+                />
+        </RelativeLayout>
 
         <!-- Movie Title -->
         <TextView
             android:id="@+id/title"
+            android:layout_toRightOf="@id/channelMeta"
+            android:layout_alignParentTop="true"
             android:layout_width="wrap_content"
-            tools:text="Really long show title here on 32"
-            android:layout_height="fill_parent"
-            android:textSize="36sp"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
+            android:paddingBottom="0dp"
+            tools:text="Saturday"
+            android:textSize="24sp"
             android:textColor="@color/big_title"
             android:shadowColor="@color/big_title_shadow"
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="1"
-            android:fontFamily="sans-serif-thin"
-            android:gravity="bottom" />
+            android:fontFamily="sans-serif"
+            android:gravity="top" />
 
-        <!-- Rating -->
+        <!-- Subline -->
         <TextView
             android:id="@+id/rating"
+            tools:text = "Drama, 7.6"
             android:layout_width="fill_parent"
-            tools:text="Crime thriller, 8.0"
             android:layout_height="wrap_content"
             android:textColor="@color/big_title"
-            android:layout_below="@id/title"
             android:layout_marginTop="1dip"
+            android:layout_marginLeft="8dip"
+            android:layout_toRightOf="@+id/channelMeta"
+            android:layout_below="@id/title"
             android:shadowColor="@color/big_title_shadow"
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="1"
             android:textSize="@dimen/rating" />
 
-        <!-- Genre -->
-        <TextView
-            android:id="@+id/genre"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rating"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/genre"
-            android:textSize="@dimen/genre" />
-
-        <!-- Release Year -->
-        <TextView
-            android:id="@+id/releaseYear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/year"
-            android:textSize="@dimen/year" />
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_below="@id/rating"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            style="?android:attr/progressBarStyleHorizontal"/>
 
     </RelativeLayout>
 </RelativeLayout>
