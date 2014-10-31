@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 
 public class SettingsActivity extends Activity {
-    public static final String PREFS_NAME = "MyPrefsFile";
+    private static final String PREFS_NAME = "MyPrefsFile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +81,7 @@ public class SettingsActivity extends Activity {
                 public void onClick(View v) {
 
 
-                    InputMethodManager inputMgr = (InputMethodManager)getActivity().
+                    InputMethodManager inputMgr = (InputMethodManager) getActivity().
                             getSystemService(Context.INPUT_METHOD_SERVICE);
                     inputMgr.hideSoftInputFromWindow(mZipCodeEditText.getWindowToken(), 0);
 
@@ -99,10 +99,8 @@ public class SettingsActivity extends Activity {
 
                                     ArrayList<String> items = new ArrayList<String>();
                                     // Convert the string into json object.
-                                    JSONArray serviceproviders = null;
                                     try {
-
-                                        serviceproviders = new JSONArray(response);
+                                        JSONArray serviceproviders = new JSONArray(response);
                                         for (int i = 0; i < serviceproviders.length(); i++) {
                                             JSONObject currentObject = serviceproviders.getJSONObject(i);
                                             JSONArray devices = currentObject.getJSONArray("Devices");
@@ -138,7 +136,6 @@ public class SettingsActivity extends Activity {
             });
 
 
-
             mServiceProviders.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -147,7 +144,7 @@ public class SettingsActivity extends Activity {
                     editor.putString("serviceProviderAndDevice", mServiceId.get(position));
                     editor.putString("zip", mZipCodeEditText.getText().toString());
                     // Commit the edits!
-                    editor.commit();
+                    editor.apply();
                     getActivity().finish();
                 }
             });

@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class RankedShows extends Fragment {
 
-    public static final String PREFS_NAME = "MyPrefsFile";
+    private static final String PREFS_NAME = "MyPrefsFile";
 
     private static final String TAG = RankedShows.class.getSimpleName();
     private ListView mListView;

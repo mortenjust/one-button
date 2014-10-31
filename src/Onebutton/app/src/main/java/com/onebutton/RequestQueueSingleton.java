@@ -43,7 +43,7 @@ public class RequestQueueSingleton {
         return mInstance;
     }
 
-    public RequestQueue getRequestQueue() {
+    RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
             // Activity or BroadcastReceiver if someone passes one in.

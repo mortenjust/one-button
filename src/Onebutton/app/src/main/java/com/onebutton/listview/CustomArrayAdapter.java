@@ -37,8 +37,6 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
     // Image loader for volley
     private ImageLoader mImageLoader;
 
-    private ViewHolder mViewHolder;
-
 
     public CustomArrayAdapter(Context context, List<Channel> values) {
         super(context, R.layout.list_row, values);
@@ -73,22 +71,23 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
             mImageLoader = RequestQueueSingleton.getInstance(mContext).getImageLoader();
         }
 
+        ViewHolder viewHolder;
         if (convertView == null) {
-            mViewHolder = new ViewHolder();
+            viewHolder = new ViewHolder();
             if (position == 0) {
                 convertView = mInflater.inflate(R.layout.list_first_row, null);
-                mViewHolder.thumbnail = (NetworkImageView) convertView.findViewById(R.id.thumbnail);
+                viewHolder.thumbnail = (NetworkImageView) convertView.findViewById(R.id.thumbnail);
             } else {
                 convertView = mInflater.inflate(R.layout.list_row, null);
-                mViewHolder.progressBar = (ProgressBar) convertView.findViewById(R.id.progress_bar);
+                viewHolder.progressBar = (ProgressBar) convertView.findViewById(R.id.progress_bar);
             }
-            mViewHolder.title = (TextView) convertView.findViewById(R.id.title);
-            mViewHolder.rating = (TextView) convertView.findViewById(R.id.rating);
-            mViewHolder.channelNumber = (TextView) convertView.findViewById(R.id.channelNumber);
-            mViewHolder.channelLogo = (ImageView) convertView.findViewById(R.id.channelLogo);
-            convertView.setTag(mViewHolder);
+            viewHolder.title = (TextView) convertView.findViewById(R.id.title);
+            viewHolder.rating = (TextView) convertView.findViewById(R.id.rating);
+            viewHolder.channelNumber = (TextView) convertView.findViewById(R.id.channelNumber);
+            viewHolder.channelLogo = (ImageView) convertView.findViewById(R.id.channelLogo);
+            convertView.setTag(viewHolder);
         } else {
-            mViewHolder = (ViewHolder) convertView.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
         Channel channel = getItem(position);
@@ -100,15 +99,15 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
             if (null == imageUrl || "N/A".equals(imageUrl)) {
                 imageUrl = currentShow.getPosterUrl();
             }
-            mViewHolder.thumbnail.setImageUrl(imageUrl, mImageLoader);
+            viewHolder.thumbnail.setImageUrl(imageUrl, mImageLoader);
         } else {
-            mViewHolder.progressBar.setProgress(currentShow.getProgress());
+            viewHolder.progressBar.setProgress(currentShow.getProgress());
         }
 
-        mViewHolder.channelLogo.setImageResource(getLogoResource(channel.getName()));
-        mViewHolder.channelNumber.setText((position + 1) + " (" + channel.getNumber() + ")");
-        mViewHolder.rating.setText(String.valueOf(currentShow.getRating()));
-        mViewHolder.title.setText(currentShow.getTitle());
+        viewHolder.channelLogo.setImageResource(getLogoResource(channel.getName()));
+        viewHolder.channelNumber.setText((position + 1) + " (" + channel.getNumber() + ")");
+        viewHolder.rating.setText(String.valueOf(currentShow.getRating()));
+        viewHolder.title.setText(currentShow.getTitle());
         return convertView;
     }
 

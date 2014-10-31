@@ -12,12 +12,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ZIP"
+            android:text="@string/zip_text"
             android:id="@+id/textView" />
 
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/zip_code_text"
             android:layout_weight="1" />
@@ -27,7 +27,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Search"
+        android:text="@string/search_button"
         android:id="@+id/search_button" />
 
     <ListView
