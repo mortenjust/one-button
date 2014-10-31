@@ -2,12 +2,14 @@ package com.onebutton;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -50,7 +52,7 @@ public class SettingsActivity extends Activity {
 
 
         private Button mSearchButton;
-        private EditText mZipCodeButton;
+        private EditText mZipCodeEditText;
         private ListView mServiceProviders;
         private ArrayList<String> mServiceId;
 
@@ -65,14 +67,14 @@ public class SettingsActivity extends Activity {
 
 
             mSearchButton = (Button) rootView.findViewById(R.id.search_button);
-            mZipCodeButton = (EditText) rootView.findViewById(R.id.zip_code_text);
+            mZipCodeEditText = (EditText) rootView.findViewById(R.id.zip_code_text);
             mServiceProviders = (ListView) rootView.findViewById(R.id.service_provider_list_view);
 
             mServiceId = new ArrayList<String>();
 
             SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
             String zip = settings.getString("zip", "");
-            mZipCodeButton.setText(zip);
+            mZipCodeEditText.setText(zip);
 
             mSearchButton.setOnClickListener(new View.OnClickListener() {
 
@@ -80,10 +82,14 @@ public class SettingsActivity extends Activity {
                 public void onClick(View v) {
 
 
-                    String zipCode = mZipCodeButton.getText().toString();
+                    InputMethodManager inputMgr = (InputMethodManager)getActivity().
+                            getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMgr.hideSoftInputFromWindow(mZipCodeEditText.getWindowToken(), 0);
 
-                    String url = "http://mobilelistings.tvguide.com/Listingsweb/ws/rest/serviceproviders/zipcode/" +
-                            zipCode + "?formattype=json";
+                    String zipCode = mZipCodeEditText.getText().toString();
+
+                    String url = "http://mobilelistings.tvguide.com/Listingsweb/ws/rest/" +
+                            "serviceproviders/zipcode/" + zipCode + "?formattype=json";
 
                     // Request a string response from the provided URL.
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -140,7 +146,7 @@ public class SettingsActivity extends Activity {
                     SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putString("serviceProviderAndDevice", mServiceId.get(position));
-                    editor.putString("zip", mZipCodeButton.getText().toString());
+                    editor.putString("zip", mZipCodeEditText.getText().toString());
 
                     // Commit the edits!
                     editor.commit();
