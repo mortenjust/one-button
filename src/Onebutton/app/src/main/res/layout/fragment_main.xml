@@ -18,7 +18,7 @@
         android:id="@+id/button_floating_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="top|right"
         fab:fab_colorNormal="#424242"
         android:layout_margin="16dp"
         android:alpha="0.25"
