@@ -31,16 +31,18 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
 
     private static final String TAG = CustomArrayAdapter.class.getSimpleName();
 
-    private final Context context;
-    private LayoutInflater inflater;
+    private final Context mContext;
+    private LayoutInflater mInflater;
 
     // Image loader for volley
-    private ImageLoader imageLoader;
+    private ImageLoader mImageLoader;
+
+    private ViewHolder mViewHolder;
 
 
     public CustomArrayAdapter(Context context, List<Channel> values) {
         super(context, R.layout.list_row, values);
-        this.context = context;
+        this.mContext = context;
     }
 
     private int getLogoResource(String channelName) {
@@ -62,55 +64,51 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        // TODO: Recycle convertview
-        if (inflater == null) {
-            inflater = (LayoutInflater) context
+        if (mInflater == null) {
+            mInflater = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-        if (imageLoader == null) {
-            imageLoader = RequestQueueSingleton.getInstance(context).getImageLoader();
+
+        if (mImageLoader == null) {
+            mImageLoader = RequestQueueSingleton.getInstance(mContext).getImageLoader();
         }
 
-        if (position == 0) {
-            convertView = inflater.inflate(R.layout.list_first_row, null);
+        if (convertView == null) {
+            mViewHolder = new ViewHolder();
+            if (position == 0) {
+                convertView = mInflater.inflate(R.layout.list_first_row, null);
+                mViewHolder.thumbnail = (NetworkImageView) convertView.findViewById(R.id.thumbnail);
+            } else {
+                convertView = mInflater.inflate(R.layout.list_row, null);
+                mViewHolder.progressBar = (ProgressBar) convertView.findViewById(R.id.progress_bar);
+            }
+            mViewHolder.title = (TextView) convertView.findViewById(R.id.title);
+            mViewHolder.rating = (TextView) convertView.findViewById(R.id.rating);
+            mViewHolder.channelNumber = (TextView) convertView.findViewById(R.id.channelNumber);
+            mViewHolder.channelLogo = (ImageView) convertView.findViewById(R.id.channelLogo);
+            convertView.setTag(mViewHolder);
         } else {
-            convertView = inflater.inflate(R.layout.list_row, null);
+            mViewHolder = (ViewHolder) convertView.getTag();
         }
-
-
-        // TODO: viewholder pattern
-        TextView title = (TextView) convertView.findViewById(R.id.title);
-        TextView rating = (TextView) convertView.findViewById(R.id.rating);
-        TextView channelNumber = (TextView) convertView.findViewById(R.id.channelNumber);
-        ImageView channelLogo = (ImageView) convertView.findViewById(R.id.channelLogo);
 
         Channel channel = getItem(position);
         Show currentShow = channel.getCurrentShow();
 
         // Position 0 is different.
         if (position == 0) {
-            NetworkImageView thumbnail = (NetworkImageView) convertView.
-                    findViewById(R.id.thumbnail);
-
-            // Big show at the top.
-            String backdropUrl = channel.getCurrentShow().getBackdropUrl();
-            if (null != backdropUrl && !"N/A".equals(backdropUrl)) {
-                Log.v(TAG, currentShow.getTitle() + " - Setting backdrop to " +
-                        backdropUrl);
-                thumbnail.setImageUrl(channel.getCurrentShow().getBackdropUrl(), imageLoader);
-            } else {
-                thumbnail.setImageUrl(channel.getCurrentShow().getPosterUrl(), imageLoader);
+            String imageUrl = currentShow.getBackdropUrl();
+            if (null == imageUrl || "N/A".equals(imageUrl)) {
+                imageUrl = currentShow.getPosterUrl();
             }
+            mViewHolder.thumbnail.setImageUrl(imageUrl, mImageLoader);
         } else {
-            ProgressBar progressBar = (ProgressBar) convertView.findViewById(R.id.progress_bar);
-            progressBar.setProgress(currentShow.getProgress());
+            mViewHolder.progressBar.setProgress(currentShow.getProgress());
         }
 
-        channelLogo.setImageResource(getLogoResource(channel.getName()));
-        channelNumber.setText((position + 1) + " (" + channel.getNumber() + ")");
-        rating.setText(String.valueOf(channel.getCurrentShow().getRating()));
-        title.setText(channel.getCurrentShow().getTitle());
+        mViewHolder.channelLogo.setImageResource(getLogoResource(channel.getName()));
+        mViewHolder.channelNumber.setText((position + 1) + " (" + channel.getNumber() + ")");
+        mViewHolder.rating.setText(String.valueOf(currentShow.getRating()));
+        mViewHolder.title.setText(currentShow.getTitle());
         return convertView;
     }
 
@@ -122,5 +120,14 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
     @Override
     public int getViewTypeCount() {
         return VIEW_TYPE_COUNT;
+    }
+
+    static class ViewHolder {
+        TextView title;
+        TextView rating;
+        TextView channelNumber;
+        ImageView channelLogo;
+        ProgressBar progressBar;
+        NetworkImageView thumbnail;
     }
 }
