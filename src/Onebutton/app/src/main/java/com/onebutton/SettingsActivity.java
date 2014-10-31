@@ -148,7 +148,6 @@ public class SettingsActivity extends Activity {
                     editor.putString("zip", mZipCodeEditText.getText().toString());
                     // Commit the edits!
                     editor.commit();
-                   
                     getActivity().finish();
                 }
             });

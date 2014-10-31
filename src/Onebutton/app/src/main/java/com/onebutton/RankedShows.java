@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
@@ -20,6 +22,7 @@ import com.onebutton.requests.ChannelResponseHandler;
 import com.onebutton.requests.ErrorResponseHandler;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -108,6 +111,38 @@ public class RankedShows extends Fragment {
                 startActivity(new Intent(getActivity(), SettingsActivity.class));
             }
         });
+
+        final android.os.Handler h = new Handler();
+        h.postDelayed(
+                new Runnable() {
+                    public void run() {
+                        arrayAdapter.sort(new Comparator<Channel>() {
+                            @Override
+                            public int compare(Channel lhs, Channel rhs) {
+                                Float rating1 = lhs.getCurrentShow().getRating();
+                                Float rating2 = rhs.getCurrentShow().getRating();
+
+                                // Punish shows with their progress.
+                                rating1 = rating1 - (lhs.getCurrentShow().getProgress() / 10);
+                                rating2 = rating2 - (rhs.getCurrentShow().getProgress() / 10);
+
+                                // Ensure > 0.
+                                rating1 = rating1 < 0 ? 0 : rating1;
+                                rating2 = rating2 < 0 ? 0 : rating2;
+
+                                int compare = rating2.compareTo(rating1);
+                                if (compare == 0) {
+                                    compare = lhs.getName().compareTo(rhs.getName());
+                                }
+                                return compare;
+                            }
+                        });
+                        arrayAdapter.notifyDataSetChanged();
+                        Toast.makeText(getActivity(), "Refreshed.", Toast.LENGTH_LONG).show();
+                        h.postDelayed(this, 60000);
+                    }
+                },
+                60000);
 
         return rootView;
     }
