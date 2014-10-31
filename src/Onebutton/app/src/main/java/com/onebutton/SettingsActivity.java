@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -147,11 +146,9 @@ public class SettingsActivity extends Activity {
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putString("serviceProviderAndDevice", mServiceId.get(position));
                     editor.putString("zip", mZipCodeEditText.getText().toString());
-
                     // Commit the edits!
                     editor.commit();
-
-                    Toast.makeText(getActivity(), mServiceId.get(position), Toast.LENGTH_SHORT).show();
+                   
                     getActivity().finish();
                 }
             });
