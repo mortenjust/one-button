@@ -108,7 +108,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         }
 
         channelLogo.setImageResource(getLogoResource(channel.getName()));
-        channelNumber.setText(channel.getNumber());
+        channelNumber.setText((position + 1) + " (" + channel.getNumber() + ")");
         rating.setText(String.valueOf(channel.getCurrentShow().getRating()));
         title.setText(channel.getCurrentShow().getTitle());
         return convertView;
