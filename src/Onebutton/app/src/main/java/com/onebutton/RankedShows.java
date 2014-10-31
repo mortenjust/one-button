@@ -34,7 +34,6 @@ public class RankedShows extends Fragment {
     private CustomArrayAdapter arrayAdapter;
     private List<Channel> runningChannels = new ArrayList<Channel>();
     private View rootView;
-    private boolean mUpdateInProgress;
 
     // Public constructor
     public RankedShows() {
@@ -48,18 +47,11 @@ public class RankedShows extends Fragment {
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        //fetchChannels();
-    }
-
     private void fetchChannels() {
-        mUpdateInProgress = true;
 
         // Example Uri:
-        // http://mobilelistings.tvguide.com/Listingsweb/ws/rest/schedules/80004/start/1412681400/duration/120
-        // ?ChannelFields=Name%2CFullName%2CNumber%2CSourceId
+        // http://mobilelistings.tvguide.com/Listingsweb/ws/rest/schedules/80004/start/1412681400
+        // /duration/120?ChannelFields=Name%2CFullName%2CNumber%2CSourceId
         // &ScheduleFields=ProgramId%2CEndTime%2CStartTime%2CTitle%2CAiringAttrib%2CCatId
         // &formattype=json
         // &disableChannels=music%2Cppv%2C24hr
@@ -77,7 +69,8 @@ public class RankedShows extends Fragment {
 
         final String FORECAST_BASE_URL =
                 "http://mobilelistings.tvguide.com/Listingsweb/ws/rest/schedules/" +
-                        serviceProviderAndDevice + "/start/" + start + "/duration/" + duration + "?";
+                        serviceProviderAndDevice + "/start/" + start + "/duration/" + duration +
+                        "?";
         final String CHANNELFIELDS_PARAM = "ChannelFields";
         final String SCHEDULEFIELDS_PARAM = "ScheduleFields";
         final String FORMATTYPE_PARAM = "formattype";
@@ -91,7 +84,8 @@ public class RankedShows extends Fragment {
                 .appendQueryParameter(DISABLECHANNELS_PARAM, disableChannels)
                 .build();
         Log.v(TAG, "URL: " + builtUri);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, builtUri.toString(), new ChannelResponseHandler(runningChannels, this), new ErrorResponseHandler());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, builtUri.toString(),
+                new ChannelResponseHandler(runningChannels, this), new ErrorResponseHandler());
         RequestQueueSingleton.getInstance(getActivity()).addToRequestQueue(stringRequest);
     }
 
@@ -106,7 +100,8 @@ public class RankedShows extends Fragment {
         mListView.setAdapter(arrayAdapter);
 
 
-        FloatingActionButton floatingActionButton = (FloatingActionButton) rootView.findViewById(R.id.button_floating_action);
+        FloatingActionButton floatingActionButton = (FloatingActionButton)
+                rootView.findViewById(R.id.button_floating_action);
         floatingActionButton.attachToListView(mListView);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override

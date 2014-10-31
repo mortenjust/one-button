@@ -11,7 +11,7 @@ public class Channel {
     // The channel number.
     private String number;
 
-    // The current show
+    // The current show.
     private Show currentShow;
 
     @Override

@@ -45,18 +45,6 @@
             android:alpha=".5" />
     </RelativeLayout>
 
-
-    <!-- Thumbnail Image to not have any top bottom left margins -->
-    <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/thumbnail"
-        android:layout_width="0dp"
-        android:background="#212121"
-        android:layout_height="0dp"
-        android:layout_alignParentLeft="true"
-        android:scaleType="centerCrop"
-        android:padding="0dip" />
-
-
     <!-- Container for data about the show -->
     <RelativeLayout
         android:layout_width="fill_parent"

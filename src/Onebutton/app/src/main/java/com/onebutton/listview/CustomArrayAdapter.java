@@ -19,14 +19,23 @@ import com.onebutton.domain.Show;
 
 import java.util.List;
 
-
+/**
+ * A custom array adapter that shows current shows.
+ */
 public class CustomArrayAdapter extends ArrayAdapter<Channel> {
-    private final Context context;
-    private LayoutInflater inflater;
-    private ImageLoader imageLoader;
+
+    // Constants for view type.
     private static final int VIEW_TYPE_COUNT = 2;
     private static final int VIEW_TYPE_POSTER = 0;
     private static final int VIEW_TYPE_ROW = 1;
+
+    private static final String TAG = CustomArrayAdapter.class.getSimpleName();
+
+    private final Context context;
+    private LayoutInflater inflater;
+
+    // Image loader for volley
+    private ImageLoader imageLoader;
 
 
     public CustomArrayAdapter(Context context, List<Channel> values) {
@@ -37,15 +46,17 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
     private int getLogoResource(String channelName) {
         String logoString = channelName.toLowerCase().replace("&", "_and_").replace("+", "plus");
 
-        int resId = getContext().getResources().getIdentifier(logoString, "drawable", "com.onebutton");
-        if (resId != 0) {
-            return resId;
-        }
-        // return R.drawable.flag_default;
-        // todo: need a default drawable for channels with no logo, using NBC for now:
+        int defaultLogo = R.drawable.nologo;
+        int resId = getContext().getResources().getIdentifier(logoString, "drawable",
+                "com.onebutton");
 
-        Log.v("RES", "Can't find " + channelName);
-        return R.drawable.nologo;
+        if (resId == 0) {
+            //TODO: need a default drawable for channels with no logo, using NBC for now:
+            Log.v(TAG, "Can't find " + channelName);
+            resId = defaultLogo;
+        }
+
+        return resId;
     }
 
 
@@ -53,10 +64,12 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         // TODO: Recycle convertview
-
         if (inflater == null) {
             inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+        if (imageLoader == null) {
+            imageLoader = RequestQueueSingleton.getInstance(context).getImageLoader();
         }
 
         if (position == 0) {
@@ -66,40 +79,29 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         }
 
 
-        if (imageLoader == null) {
-            imageLoader = RequestQueueSingleton.getInstance(context).getImageLoader();
-        }
-
-        NetworkImageView thumbNail = (NetworkImageView) convertView
-                .findViewById(R.id.thumbnail);
+        // TODO: viewholder pattern
         TextView title = (TextView) convertView.findViewById(R.id.title);
         TextView rating = (TextView) convertView.findViewById(R.id.rating);
         TextView channelNumber = (TextView) convertView.findViewById(R.id.channelNumber);
         ImageView channelLogo = (ImageView) convertView.findViewById(R.id.channelLogo);
 
-
-        // getting movie data for the row
-        //Movie m = movieItems.get(position);
-
         Channel channel = getItem(position);
-        Log.v("Adapter", "" + position);
-
         Show currentShow = channel.getCurrentShow();
-        // long now = System.currentTimeMillis()/1000;
-        // long fullTime = currentShow.getEndtime() - currentShow.getStarttime();
 
-
-        // thumbnail image
-        // title and thumbnail
+        // Position 0 is different.
         if (position == 0) {
+            NetworkImageView thumbnail = (NetworkImageView) convertView.
+                    findViewById(R.id.thumbnail);
 
-            // big show at the top:
+            // Big show at the top.
             String backdropUrl = channel.getCurrentShow().getBackdropUrl();
             if (null != backdropUrl && !"N/A".equals(backdropUrl)) {
-                Log.v("Adapter", channel.getCurrentShow().getTitle() + " - Setting backdrop to " + backdropUrl);
-                thumbNail.setImageUrl(channel.getCurrentShow().getBackdropUrl(), imageLoader);
+                Log.v(TAG, currentShow.getTitle() + " - Setting backdrop to " +
+                        backdropUrl);
+                thumbnail.setImageUrl(channel.getCurrentShow().getBackdropUrl(), imageLoader);
+            } else {
+                thumbnail.setImageUrl(channel.getCurrentShow().getPosterUrl(), imageLoader);
             }
-            // small shows in the list:
         } else {
             ProgressBar progressBar = (ProgressBar) convertView.findViewById(R.id.progress_bar);
             progressBar.setProgress(currentShow.getProgress());
@@ -110,7 +112,6 @@ public class CustomArrayAdapter extends ArrayAdapter<Channel> {
         rating.setText(String.valueOf(channel.getCurrentShow().getRating()));
         title.setText(channel.getCurrentShow().getTitle());
         return convertView;
-
     }
 
     @Override

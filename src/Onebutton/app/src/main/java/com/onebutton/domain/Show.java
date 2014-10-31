@@ -4,17 +4,22 @@ package com.onebutton.domain;
  * A show.
  */
 public class Show {
-    // The title of the show.
+    // The title
     private String title;
 
-    // The category of a show.
+    // The category
     private int category;
 
+    // The plot
     private String plot;
+
+    // The imbd ID.
     private String imdbId;
+
+    // Backdrop URL.
     private String backdropUrl;
 
-    // The rating of a show.
+    // The rating.
     private float rating;
 
     // The start time.
@@ -28,24 +33,9 @@ public class Show {
 
     // The genre
     private String genre;
+
     // The poster
     private String posterUrl;
-
-    @Override
-    public String toString() {
-        return "Show{" +
-                "title='" + title + '\'' +
-                ", category=" + category +
-                ", rating=" + rating +
-                ", plot=" + plot+
-                ", imdbid=" + imdbId+
-                ", starttime=" + starttime +
-                ", endtime=" + endtime +
-                ", year='" + year + '\'' +
-                ", genre='" + genre + '\'' +
-                ", posterUrl='" + posterUrl + '\'' +
-                '}';
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -54,12 +44,15 @@ public class Show {
 
         Show show = (Show) o;
 
-
         if (category != show.category) return false;
         if (endtime != show.endtime) return false;
         if (Float.compare(show.rating, rating) != 0) return false;
         if (starttime != show.starttime) return false;
+        if (backdropUrl != null ? !backdropUrl.equals(show.backdropUrl) : show.backdropUrl != null)
+            return false;
         if (genre != null ? !genre.equals(show.genre) : show.genre != null) return false;
+        if (imdbId != null ? !imdbId.equals(show.imdbId) : show.imdbId != null) return false;
+        if (plot != null ? !plot.equals(show.plot) : show.plot != null) return false;
         if (posterUrl != null ? !posterUrl.equals(show.posterUrl) : show.posterUrl != null)
             return false;
         if (title != null ? !title.equals(show.title) : show.title != null) return false;
@@ -72,6 +65,9 @@ public class Show {
     public int hashCode() {
         int result = title != null ? title.hashCode() : 0;
         result = 31 * result + category;
+        result = 31 * result + (plot != null ? plot.hashCode() : 0);
+        result = 31 * result + (imdbId != null ? imdbId.hashCode() : 0);
+        result = 31 * result + (backdropUrl != null ? backdropUrl.hashCode() : 0);
         result = 31 * result + (rating != +0.0f ? Float.floatToIntBits(rating) : 0);
         result = 31 * result + (int) (starttime ^ (starttime >>> 32));
         result = 31 * result + (int) (endtime ^ (endtime >>> 32));
@@ -81,30 +77,53 @@ public class Show {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Show{" +
+                "title='" + title + '\'' +
+                ", category=" + category +
+                ", rating=" + rating +
+                ", plot=" + plot +
+                ", imdbid=" + imdbId +
+                ", starttime=" + starttime +
+                ", endtime=" + endtime +
+                ", year='" + year + '\'' +
+                ", genre='" + genre + '\'' +
+                ", posterUrl='" + posterUrl + '\'' +
+                '}';
+    }
+
     public String getPosterUrl() {
 
         return posterUrl;
     }
 
+    public void setPosterUrl(String posterUrl) {
+        this.posterUrl = posterUrl;
+    }
+
     public String getImdbId() {
         return imdbId;
     }
-    public void setImdbId(String imdbId) { this.imdbId= imdbId; }
+
+    public void setImdbId(String imdbId) {
+        this.imdbId = imdbId;
+    }
 
     public String getPlot() {
         return plot;
     }
-    public void setPlot(String plot) { this.plot = plot; }
 
+    public void setPlot(String plot) {
+        this.plot = plot;
+    }
 
     public String getBackdropUrl() {
         return backdropUrl;
     }
-    public void setBackdropUrl(String backdropUrl) { this.backdropUrl= backdropUrl; }
 
-
-    public void setPosterUrl(String posterUrl) {
-        this.posterUrl = posterUrl;
+    public void setBackdropUrl(String backdropUrl) {
+        this.backdropUrl = backdropUrl;
     }
 
     public String getYear() {
@@ -165,11 +184,15 @@ public class Show {
         this.title = title;
     }
 
-    public int getProgress() { // returns progress as 0 to 100
-        long now = System.currentTimeMillis()/1000;
-        long fullTime = this.getEndtime() - this.getStarttime();
-        int progress = (int)(((now - this.getStarttime()) * 100)/fullTime);
-        return progress;
+    /**
+     * Returns the progress of a current show.
+     *
+     * @return returns progress as 0 to 100 in percent.
+     */
+    public int getProgress() {
+        long now = System.currentTimeMillis() / 1000;
+        long fullTime = getEndtime() - getStarttime();
+        return (int) (((now - getStarttime()) * 100) / fullTime);
     }
 
 

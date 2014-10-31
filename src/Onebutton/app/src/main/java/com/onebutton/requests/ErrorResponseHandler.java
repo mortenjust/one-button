@@ -6,12 +6,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 /**
- * Created by flow on 10/11/14.
+ * Error response handler.
  */
 public class ErrorResponseHandler implements Response.ErrorListener {
 
+    private static final String TAG = ErrorResponseHandler.class.getSimpleName();
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.e("Volley error (was ABC)", "Failed (dude, are you online?)", error);
+        Log.e(TAG, "Dude, where is your internet?", error);
     }
 }
