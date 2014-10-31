@@ -42,9 +42,10 @@ public class RankedShows extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (arrayAdapter == null || arrayAdapter.getCount() == 0) {
-            fetchChannels();
-        }
+        //if (arrayAdapter == null || arrayAdapter.getCount() == 0) {
+        runningChannels.clear();
+        fetchChannels();
+        //}
     }
 
     private void fetchChannels() {
