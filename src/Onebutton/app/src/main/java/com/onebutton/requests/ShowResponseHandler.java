@@ -1,5 +1,6 @@
 package com.onebutton.requests;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -8,13 +9,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.onebutton.RankedShows;
 import com.onebutton.RequestQueueSingleton;
 import com.onebutton.domain.Channel;
+import com.onebutton.domain.ChannelComparator;
 import com.onebutton.domain.Show;
+import com.onebutton.listview.CustomArrayAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Comparator;
 
 
 /**
@@ -24,11 +25,11 @@ public class ShowResponseHandler implements Response.Listener<String> {
 
     private static final String TAG = ShowResponseHandler.class.getSimpleName();
     private Channel mChannel;
-    private RankedShows mActivity;
+    private Callback mActivityCallback;
 
     public ShowResponseHandler(Channel channel, RankedShows activity) {
         mChannel = channel;
-        mActivity = activity;
+        mActivityCallback = activity;
     }
 
     @Override
@@ -103,33 +104,13 @@ public class ShowResponseHandler implements Response.Listener<String> {
                         Log.v("TAG", "For: " + url);
                     }
 
-                    mActivity.getArrayAdapter().sort(new Comparator<Channel>() {
-                        @Override
-                        public int compare(Channel lhs, Channel rhs) {
-                            Float rating1 = lhs.getCurrentShow().getRating();
-                            Float rating2 = rhs.getCurrentShow().getRating();
-
-                            // Punish shows with their progress.
-                            rating1 = rating1 - (lhs.getCurrentShow().getProgress() / 10);
-                            rating2 = rating2 - (rhs.getCurrentShow().getProgress() / 10);
-
-                            // Ensure > 0.
-                            rating1 = rating1 < 0 ? 0 : rating1;
-                            rating2 = rating2 < 0 ? 0 : rating2;
-
-                            int compare = rating2.compareTo(rating1);
-                            if (compare == 0) {
-                                compare = lhs.getName().compareTo(rhs.getName());
-                            }
-                            return compare;
-                        }
-                    });
-                    mActivity.getArrayAdapter().notifyDataSetChanged();
+                    mActivityCallback.getArrayAdapter().sort(new ChannelComparator());
+                    mActivityCallback.getArrayAdapter().notifyDataSetChanged();
 
                 }
             }, new ErrorResponseHandler());
 
-            RequestQueueSingleton.getInstance(mActivity.getActivity()).addToRequestQueue(stringRequest);
+            RequestQueueSingleton.getInstance(mActivityCallback.getContext()).addToRequestQueue(stringRequest);
 
 
         } catch (JSONException e) {
@@ -137,5 +118,12 @@ public class ShowResponseHandler implements Response.Listener<String> {
         }
 
         Log.v(TAG, mChannel.toString());
+    }
+
+
+    public interface Callback {
+
+        public CustomArrayAdapter getArrayAdapter();
+        public Context getContext();
     }
 }

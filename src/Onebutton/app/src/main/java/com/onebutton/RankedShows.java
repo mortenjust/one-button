@@ -1,6 +1,7 @@
 package com.onebutton;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -17,18 +18,19 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.melnykov.fab.FloatingActionButton;
 import com.onebutton.domain.Channel;
+import com.onebutton.domain.ChannelComparator;
 import com.onebutton.listview.CustomArrayAdapter;
 import com.onebutton.requests.ChannelResponseHandler;
 import com.onebutton.requests.ErrorResponseHandler;
+import com.onebutton.requests.ShowResponseHandler;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 /**
  * This Fragment shows the ranked shows.
  */
-public class RankedShows extends Fragment {
+public class RankedShows extends Fragment implements ShowResponseHandler.Callback {
 
     private static final String PREFS_NAME = "MyPrefsFile";
 
@@ -45,8 +47,18 @@ public class RankedShows extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        runningChannels.clear();
-        fetchChannels();
+
+        SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
+
+        String serviceProviderAndDevice =
+                settings.getString(getString(R.string.service_provider_setting), "");
+
+        if ("".equals(serviceProviderAndDevice)) {
+            startActivity(new Intent(getActivity(), SettingsActivity.class));
+        } else {
+            runningChannels.clear();
+            fetchChannels();
+        }
     }
 
     private void fetchChannels() {
@@ -60,7 +72,8 @@ public class RankedShows extends Fragment {
 
         SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
 
-        String serviceProviderAndDevice = settings.getString("serviceProviderAndDevice", "");
+        String serviceProviderAndDevice =
+                settings.getString(getString(R.string.service_provider_setting), "");
         String start = Long.toString(System.currentTimeMillis() / 1000);
         String duration = Integer.toString(120);
         String channelFields = "Name,FullName,Number,SourceId";
@@ -116,27 +129,7 @@ public class RankedShows extends Fragment {
         h.postDelayed(
                 new Runnable() {
                     public void run() {
-                        arrayAdapter.sort(new Comparator<Channel>() {
-                            @Override
-                            public int compare(Channel lhs, Channel rhs) {
-                                Float rating1 = lhs.getCurrentShow().getRating();
-                                Float rating2 = rhs.getCurrentShow().getRating();
-
-                                // Punish shows with their progress.
-                                rating1 = rating1 - (lhs.getCurrentShow().getProgress() / 10);
-                                rating2 = rating2 - (rhs.getCurrentShow().getProgress() / 10);
-
-                                // Ensure > 0.
-                                rating1 = rating1 < 0 ? 0 : rating1;
-                                rating2 = rating2 < 0 ? 0 : rating2;
-
-                                int compare = rating2.compareTo(rating1);
-                                if (compare == 0) {
-                                    compare = lhs.getName().compareTo(rhs.getName());
-                                }
-                                return compare;
-                            }
-                        });
+                        arrayAdapter.sort(new ChannelComparator());
                         arrayAdapter.notifyDataSetChanged();
                         Toast.makeText(getActivity(), "Refreshed.", Toast.LENGTH_LONG).show();
                         h.postDelayed(this, 60000);
@@ -147,9 +140,13 @@ public class RankedShows extends Fragment {
         return rootView;
     }
 
-
     public CustomArrayAdapter getArrayAdapter() {
         return arrayAdapter;
+    }
+
+    @Override
+    public Context getContext() {
+        return getActivity();
     }
 
 }
