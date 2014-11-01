@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
@@ -131,7 +130,6 @@ public class RankedShows extends Fragment implements ShowResponseHandler.Callbac
                     public void run() {
                         arrayAdapter.sort(new ChannelComparator());
                         arrayAdapter.notifyDataSetChanged();
-                        Toast.makeText(getActivity(), "Refreshed.", Toast.LENGTH_LONG).show();
                         h.postDelayed(this, 60000);
                     }
                 },
